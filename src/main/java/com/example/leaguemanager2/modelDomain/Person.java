@@ -1,4 +1,4 @@
-package modelDomain;
+package com.example.leaguemanager2.modelDomain;
 
 import java.util.Objects;
 

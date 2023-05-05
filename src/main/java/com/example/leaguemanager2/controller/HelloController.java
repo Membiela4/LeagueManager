@@ -1,4 +1,4 @@
-package com.example.leaguemanager2;
+package com.example.leaguemanager2.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

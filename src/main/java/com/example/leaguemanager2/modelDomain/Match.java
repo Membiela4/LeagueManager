@@ -1,12 +1,12 @@
-package modelDomain;
+package com.example.leaguemanager2.modelDomain;
 
 import java.util.Objects;
 
 public class Match {
-    private  String match_id;
-    private Team local;
-    private Team visitor;
-    private int day;
+    private String match_id; //auto-increment id of each match
+    private Team local; //First team which play as Local
+    private Team visitor; //Second team as visitor
+    private int day; //Jornada
 
     //Getter and Setters
     public String getMatch_id() {

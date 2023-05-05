@@ -1,4 +1,4 @@
-package utils;
+package com.example.leaguemanager2.utils;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -8,8 +8,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+
+
 public class Connect {
-    private String file ="conexion.xml";
+    private final String file ="conexion";
     private static Connect _newInstance;
     private Connect() {
         ConnectionData cd = loadXML();
@@ -36,7 +38,7 @@ public class Connect {
      * Metodo que carga la conexion XML
      * @return conexion establecida
      */
-    public ConnectionData loadXML() {
+    public  ConnectionData loadXML() {
         ConnectionData con = new ConnectionData();
         JAXBContext jaxbContext;
         try{
@@ -44,9 +46,9 @@ public class Connect {
             Unmarshaller jaxunmarshaller = jaxbContext.createUnmarshaller();
             con = (ConnectionData) jaxunmarshaller.unmarshal(new File(file));
         } catch (JAXBException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
         return con;
     }
 }

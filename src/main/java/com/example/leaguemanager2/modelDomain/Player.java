@@ -1,4 +1,4 @@
-package modelDomain;
+package com.example.leaguemanager2.modelDomain;
 
 import java.util.Objects;
 
@@ -6,7 +6,7 @@ public class Player extends Person{
 
     private int player_id;
     private String alias;
-    private int dorsal;
+    private int dorsal; //each dorsal cant be duplicated for each team
     private Team team;
 
     public int getPlayer_id() {

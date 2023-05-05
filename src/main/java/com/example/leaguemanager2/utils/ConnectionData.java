@@ -1,4 +1,4 @@
-package utils;
+package com.example.leaguemanager2.utils;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -16,10 +16,10 @@ public class ConnectionData implements Serializable {
 
 
     public ConnectionData(){
-        this.server="";
-        this.database="";
+        this.server="jdbc:mysql://localhost:3306";
+        this.database="gestorligas";
         this.password="";
-        this.username="";
+        this.username="root";
     }
 
     public String getDatabase() {
