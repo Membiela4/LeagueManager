@@ -13,14 +13,19 @@ import java.util.List;
 public class PlayerDAO implements DAO {
     private final static String FINDALL = "select * from player";
     private final static String FINDBYNAME = "select * from player where name = ?";
+    private final static String FINDBYID = "select * from player where player_id = ?";
     private final static String FINDBYTEAM = "select * from player where team_id = ?";
     private final static String DELETE = "delete from player where player_id = ?";
-    private final static String UPDATE = "update player set alias = ?, dorsal = ? where player_id = ?";
-    private final static String INSERT = "insert into player(player_id,name,last_name,alias,dorsal) values(?,?,?,?,?)";
+    private final static String UPDATE = "update player set alias = ?, dorsal = ?, team = ? where player_id = ?";
+    private final static String INSERT = "insert into player(player_id,name,last_name,alias,dorsal,team_id) values(?,?,?,?,?,?)";
 
     private Connection connection;
      public PlayerDAO(Connection connection) {this.connection = connection;}
     public PlayerDAO() {this.connection = Connect.getConnect();}
+
+    private TeamDAO teamDAO= new TeamDAO();
+    public static PlayerDAO playerdao;
+
 
     @Override
     public List findAll() throws SQLException {
@@ -37,6 +42,7 @@ public class PlayerDAO implements DAO {
                     p.setLastName(resultSet.getString("last_name"));
                     p.setAlias(resultSet.getString("alias"));
                     p.setDorsal(resultSet.getInt("dorsal"));
+                    p.setTeam(teamDAO.findByid(resultSet.getInt("team_id")));
                     players.add(p);
                 }
             }
@@ -45,12 +51,27 @@ public class PlayerDAO implements DAO {
     }
 
     @Override
-    public Player FindByid(int player_id) {
-        return null;
+    public Player findByid(int player_id) throws SQLException {
+        Player result = null;
+        PreparedStatement pst = this.connection.prepareStatement(FINDBYID);
+        pst.setInt(1,player_id);
+        try(ResultSet rs = pst.executeQuery()) {
+            if(rs.next()) {
+                result = new Player();
+                result.setName(rs.getString("name"));
+                result.setLastName(rs.getString("last_name"));
+                result.setAlias(rs.getString("alias"));
+                result.setDorsal(rs.getInt("dorsal"));
+                result.setPlayer_id(rs.getInt("player_id"));
+                result.setTeam(teamDAO.findByid(rs.getInt("team_id")));
+            }
+            return result;
+        }
+
     }
 
     @Override
-    public Player FindByName(String name) throws SQLException {
+    public Player findByName(String name) throws SQLException {
         Player result = null;
         PreparedStatement pst =this.connection.prepareStatement(FINDBYNAME);
         pst.setString(1,name);
@@ -62,6 +83,7 @@ public class PlayerDAO implements DAO {
                     result.setLastName(rs.getString("last_name"));
                     result.setAlias(rs.getString("alias"));
                     result.setDorsal(rs.getInt("dorsal"));
+                    result.setTeam(teamDAO.findByid(rs.getInt("team_id")));
 
                 }
                 return result;
@@ -72,6 +94,7 @@ public class PlayerDAO implements DAO {
     public Object save(Object entity) throws SQLException {
         return null;
     }
+
 
     public Player findByTeam(int id) throws SQLException {
          Player result = null;
@@ -113,20 +136,35 @@ public class PlayerDAO implements DAO {
     }
 
 
-    public Object save(Player entity) throws SQLException {
+    public Player save(Player entity) throws SQLException {
         Player result = new Player();
         if (entity != null) {
-            Player p = FindByid(entity.getPlayer_id());
+            Player p = findByid(entity.getPlayer_id());
             if (p == null) {
                 //INSERT
                 try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
                     pst.setInt(1, entity.getPlayer_id());
                     pst.setString(2, entity.getName());
                     pst.setString(3, entity.getLastName());
+                    pst.setString(4, entity.getAlias());
+                    pst.setInt(5,entity.getDorsal());
+                    pst.setInt(6,entity.getTeam().getTeam_id()); //FALLO AQUI
+
                     pst.executeUpdate();
 
                 }
+            }else {
+            //UPDATE
+            if(p!=null)
+                playerdao.save(entity.getTeam());
+            try(PreparedStatement pst=this.connection.prepareStatement(UPDATE)){
+                pst.setString(1, entity.getAlias());
+                pst.setInt(2,entity.getDorsal());
+                pst.setObject(3,entity.getTeam());
+                pst.setInt(4,entity.getPlayer_id());
+                pst.executeUpdate();
             }
+        }
 
             result = entity;
         }

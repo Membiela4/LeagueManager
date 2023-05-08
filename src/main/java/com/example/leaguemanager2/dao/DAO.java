@@ -6,9 +6,9 @@ import java.util.List;
 public interface DAO<T> extends AutoCloseable {
 
     List<T> findAll() throws SQLException;
-    T FindByid(int id);
+    T findByid(int id) throws SQLException;
 
-    T FindByName(String name) throws SQLException;
+    T findByName(String name) throws SQLException;
 
     T save(T entity) throws SQLException;
 

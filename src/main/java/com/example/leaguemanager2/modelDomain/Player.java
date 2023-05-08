@@ -71,6 +71,16 @@ public class Player extends Person{
         return Objects.hash(super.hashCode(), getPlayer_id());
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "player_id=" + player_id +
+                ", alias='" + alias + '\'' +
+                ", dorsal=" + dorsal +
+                ", team=" + team +
+                '}';
+    }
+
     public void setTeam(Player p, Team t) {
             p.setTeam(t);
     }

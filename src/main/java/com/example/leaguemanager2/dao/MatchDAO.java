@@ -1,35 +1,36 @@
 package com.example.leaguemanager2.dao;
 
+import com.example.leaguemanager2.modelDomain.Match;
+
 import java.sql.SQLException;
 import java.util.List;
 
-public class MatchDAO implements DAO {
-    @Override
+public class MatchDAO  {
+
     public List findAll() throws SQLException {
         return null;
     }
 
-    @Override
-    public Object FindByid(int id) {
+
+    public Object findByid(int id) {
         return null;
     }
 
-    @Override
-    public Object FindByName(String name) throws SQLException {
+
+    public Object findByDay(int day) throws SQLException {
         return null;
     }
 
-    @Override
-    public Object save(Object entity) throws SQLException {
-        return null;
+
+    public Object save(Object match) throws SQLException {
+        return match;
     }
 
-    @Override
     public void delete(String dni) throws SQLException {
 
     }
 
-    @Override
+
     public void close() throws Exception {
 
     }
