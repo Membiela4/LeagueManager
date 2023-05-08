@@ -14,10 +14,11 @@ public class Test2 {
         TeamDAO teamDAO = new TeamDAO();
         try{
             Match m = new Match(teamDAO.findByName("Madrid"),teamDAO.findByName("Barca"),1);
+            System.out.println(m);
         }catch(SQLException e){
 
         }
-        System.out.println(m);
+
 
     }
 

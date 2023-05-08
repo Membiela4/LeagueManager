@@ -1,5 +1,6 @@
 package com.example.leaguemanager2.modelDomain;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Match {
@@ -44,6 +45,7 @@ public class Match {
     public void setDay(int day) {
         this.day = day;
     }
+
     //Constructors
     public Match(Team local, Team visitor, int day) {
         this.local = local;
@@ -77,5 +79,6 @@ public class Match {
                 ", day=" + day +
                 '}';
     }
+
 
 }

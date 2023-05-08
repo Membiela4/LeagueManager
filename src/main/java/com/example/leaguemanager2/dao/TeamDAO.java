@@ -15,7 +15,7 @@ public class TeamDAO {
     private final static String FINDBYNAME = "select * from team where name = ?";
     private final static String FINDBYID =" select * from team where team_id = ?";
     private final static String DELETE = "delete from team where team_id = ?";
-    private final static String UPDATE = "update team set name = ?, abbreviation = ?, where team_id = ?";
+    private final static String UPDATE = "update team set name = ?,team_id =?, abbreviation = ?,icon = ?,num_players = ?, where team_id = ?";
     private final static String INSERT = "insert into team(team_id,team_name,abbreviation,icon,num_players) values(?,?,?,?,?)";
 
     private Connection connection;
