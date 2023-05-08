@@ -11,7 +11,7 @@ import java.sql.SQLException;
 
 
 public class Connect {
-    private final String file ="conexion";
+    private final String file ="conexion.xml";
     private static Connect _newInstance;
     private Connect() {
         ConnectionData cd = loadXML();

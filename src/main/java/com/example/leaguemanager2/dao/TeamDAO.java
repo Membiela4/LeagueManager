@@ -13,9 +13,10 @@ import java.util.List;
 public class TeamDAO {
     private final static String FINDALL = "select * from team";
     private final static String FINDBYNAME = "select * from team where name = ?";
+    private final static String FINDBYID =" select * from team where team_id = ?";
     private final static String DELETE = "delete from team where team_id = ?";
-    private final static String UPDATE = "update team set name = ?, abbreviation where team_id = ?";
-    private final static String INSERT = "insert into team(team_id,name,abbreviation,icon,num_players) values(?,?,?,?,?)";
+    private final static String UPDATE = "update team set name = ?, abbreviation = ?, where team_id = ?";
+    private final static String INSERT = "insert into team(team_id,team_name,abbreviation,icon,num_players) values(?,?,?,?,?)";
 
     private Connection connection;
 
@@ -46,15 +47,10 @@ public class TeamDAO {
     }
 
 
-    public Team FindByid(int id) {
-        return null;
-    }
-
-
-    public Team FindByName(String name) throws SQLException {
+    public Team findByid(int id) throws SQLException {
         Team result = null;
-        PreparedStatement pst =this.connection.prepareStatement(FINDBYNAME);
-        pst.setString(1,name);
+        PreparedStatement pst =this.connection.prepareStatement(FINDBYID);
+        pst.setInt(1,id);
         try(ResultSet rs = pst.executeQuery()) {
             if(rs.next()) {
                 result = new Team();
@@ -70,10 +66,30 @@ public class TeamDAO {
     }
 
 
-    public Object save(Team entity) throws SQLException {
+    public Team findByName(String name) throws SQLException {
+        Team result = null;
+        PreparedStatement pst =this.connection.prepareStatement(FINDBYNAME);
+        pst.setString(1,name);
+        try(ResultSet rs = pst.executeQuery()) {
+            if(rs.next()) {
+                result = new Team();
+                result.setName(rs.getString("name"));
+                result.setTeam_id(rs.getInt("team_id"));
+                result.setAbbreviation(rs.getString("abbreviation"));
+                result.setIcon(rs.getBlob("icon"));
+                result.setPlayers(playerdao.findByTeamWhole(result.getTeam_id()));
+
+
+            }
+            return result;
+        }
+    }
+
+
+    public Team save(Team entity) throws SQLException {
         Team result = new Team();
         if (entity != null) {
-            Team t = FindByid(entity.getTeam_id());
+            Team t = findByid(entity.getTeam_id());
             if (t == null) {
                 //INSERT
                 try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
@@ -81,6 +97,7 @@ public class TeamDAO {
                     pst.setString(2, entity.getName());
                     pst.setString(3, entity.getAbbreviation());
                     pst.setBlob(4,entity.getIcon());
+                    pst.setInt(5,0); //cambiar por el tamaño del array de jugadores
                     pst.executeUpdate();
 
                 }

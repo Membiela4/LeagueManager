@@ -8,6 +8,10 @@ public class Match {
     private Team visitor; //Second team as visitor
     private int day; //Jornada
 
+    public Match() {
+
+    }
+
     //Getter and Setters
     public String getMatch_id() {
         return match_id;

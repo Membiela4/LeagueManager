@@ -73,4 +73,14 @@ public class Team {
     }
 
 
+    @Override
+    public String toString() {
+        return "Team{" +
+                "team_id=" + team_id +
+                ", name='" + name + '\'' +
+                ", abbreviation='" + abbreviation + '\'' +
+                ", players=" + players +
+                ", icon=" + icon +
+                '}';
+    }
 }
