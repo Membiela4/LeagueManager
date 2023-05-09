@@ -6,19 +6,20 @@ import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.modelDomain.Team;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class Test1 {
 
     public static void main(String[] args) throws SQLException {
         PlayerDAO playerDAO =new PlayerDAO();
         TeamDAO teamDAO = new TeamDAO();
-        //TEST CREAR EQUIPO
+        /*TEST CREAR EQUIPO
         Team t = new Team();
         t.setName("Madrid");
         t.setAbbreviation("RMA");
         t.setIcon(null);
         t.setPlayers(null);
-        //teamDAO.save(t);
+        teamDAO.save(t);
 
         Team t2 = new Team();
         t2.setName("Barca");
@@ -26,6 +27,10 @@ public class Test1 {
         t2.setIcon(null);
         t2.setPlayers(null);
         //teamDAO.save(t2);
+         /*
+         */
+
+        List<Team> teams = teamDAO.findAll();
 
         //TEST CREAR JUGADOR(FALLO AL ASIGNAR EL TEAM ID)
         Player p = new Player();
@@ -33,20 +38,16 @@ public class Test1 {
         p.setLastName("Ronaldo");
         p.setAlias("CR7");
         p.setDorsal(7);
-        p.setTeam(t);
-        playerDAO.save(p);
+        //playerDAO.save(p);
 
         Player p2 = new Player();
         p2.setName("Lionel");
         p2.setLastName("Messi");
         p2.setAlias("Messi");
         p2.setDorsal(10);
-        p2.setTeam(t2);
-        playerDAO.save(p2);
+        //playerDAO.save(p2);
 
 
 
-        System.out.println(p);
-        System.out.println(t);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.leaguemanager2.dao;
 
+import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.modelDomain.Team;
 import com.example.leaguemanager2.utils.Connect;
 
@@ -10,12 +11,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamDAO {
+public class TeamDAO implements DAO<Team> {
     private final static String FINDALL = "select * from team";
     private final static String FINDBYNAME = "select * from team where name = ?";
     private final static String FINDBYID =" select * from team where team_id = ?";
     private final static String DELETE = "delete from team where team_id = ?";
-    private final static String UPDATE = "update team set name = ?,team_id =?, abbreviation = ?,icon = ?,num_players = ?, where team_id = ?";
+    private final static String UPDATE = "update team set team_id =?, team_name = ?, abbreviation = ?,icon = ?,num_players = ?, where team_id = ?";
     private final static String INSERT = "insert into team(team_id,team_name,abbreviation,icon,num_players) values(?,?,?,?,?)";
 
     private Connection connection;
@@ -24,7 +25,7 @@ public class TeamDAO {
 
     public TeamDAO(Connection connection) {this.connection = connection;}
     public TeamDAO() {this.connection = Connect.getConnect();}
-
+    @Override
     public List findAll() throws SQLException {
         List<Team> teams = new ArrayList<>();
 
@@ -35,9 +36,9 @@ public class TeamDAO {
                 while(resultSet.next()) {
                     Team t = new Team();
                     t.setTeam_id(resultSet.getInt("team_id"));
-                    t.setName(resultSet.getString("name"));
-                    t.setAbbreviation(resultSet.getString("last_name"));
-                    t.getIcon();
+                    t.setName(resultSet.getString("team_name"));
+                    t.setAbbreviation(resultSet.getString("abbreviation"));
+                    t.setIcon(null);
                     t.setPlayers(playerdao.findByTeamWhole(t.getTeam_id()));
                     teams.add(t);
                 }
@@ -46,7 +47,7 @@ public class TeamDAO {
         return teams;
     }
 
-
+    @Override
     public Team findByid(int id) throws SQLException {
         Team result = null;
         PreparedStatement pst =this.connection.prepareStatement(FINDBYID);
@@ -65,7 +66,7 @@ public class TeamDAO {
         }
     }
 
-
+    @Override
     public Team findByName(String name) throws SQLException {
         Team result = null;
         PreparedStatement pst =this.connection.prepareStatement(FINDBYNAME);
@@ -86,33 +87,64 @@ public class TeamDAO {
     }
 
 
+    @Override
     public Team save(Team entity) throws SQLException {
-        Team result = new Team();
-        if (entity != null) {
-            Team t = findByid(entity.getTeam_id());
-            if (t == null) {
-                //INSERT
-                try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
-                    pst.setInt(1, entity.getTeam_id());
-                    pst.setString(2, entity.getName());
-                    pst.setString(3, entity.getAbbreviation());
-                    pst.setBlob(4,entity.getIcon());
-                    pst.setInt(5,0); //cambiar por el tamaño del array de jugadores
-                    pst.executeUpdate();
+            Team result = new Team();
+            if(entity!=null) {
+                Team t = findByid(entity.getTeam_id());
+                if(t == null) {
+                    //INSERT
+                    try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
+                        pst.setInt(1, entity.getTeam_id());
+                        pst.setString(2, entity.getName());
+                        pst.setString(3, entity.getAbbreviation());
+                        pst.setBlob(4,entity.getIcon());
+                        pst.setInt(5,0); //cambiar por el tamaño del array de jugadores
+                        pst.executeUpdate();
+                        /** Players of team */
+                        PlayerDAO pdao = new PlayerDAO(this.connection);
+                        List<Player> players = pdao.findByTeamWhole(entity.getTeam_id());
 
+                        for(Player p : players) {
+                            pdao.delete(p);
+                        }
+                        for(Player p : entity.getPlayers()) {
+                            p.setTeam(entity);
+                            pdao.save(p);
+                        }
+                    }
+                }else {
+                    //UPDATE
+                    try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
+                        pst.setInt(1, entity.getTeam_id());
+                        pst.setString(2, entity.getName());
+                        pst.setString(3, entity.getAbbreviation());
+                        pst.setBlob(4, entity.getIcon());
+                        pst.setInt(5, 0); //cambiar por el tamaño del array de jugadores
+                        pst.executeUpdate();
+                    }
+                    /** Players of team */
+                    PlayerDAO pdao = new PlayerDAO(this.connection);
+                    List<Player> players = pdao.findByTeamWhole(entity.getTeam_id());
+
+                    for(Player p : players) {
+                        pdao.delete(p);
+                    }
+                    for(Player p : entity.getPlayers()) {
+                        p.setTeam(entity);
+                        pdao.save(p);
+                    }
                 }
+                result=entity;
             }
-
-            result = entity;
-        }
-        return result;
+            return result;
     }
 
-    //@Override
-    public void delete(String id) throws SQLException {
-        if(id!=null) {
+    @Override
+    public void delete(Team t) throws SQLException {
+        if(t!=null) {
             try(PreparedStatement pst=this.connection.prepareStatement(DELETE)){
-                pst.setString(1, id);
+                pst.setInt(1, t.getTeam_id());
                 pst.executeUpdate();
                 pst.close();
             }
@@ -120,7 +152,7 @@ public class TeamDAO {
         }
     }
 
-    //@Override
+    @Override
     public void close() throws Exception {
         playerdao.close();
         connection.close();

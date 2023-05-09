@@ -1,7 +1,6 @@
 package com.example.leaguemanager2.dao;
 import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.utils.Connect;
-import com.example.leaguemanager2.utils.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,13 +9,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerDAO implements DAO {
+public class PlayerDAO implements DAO<Player> {
     private final static String FINDALL = "select * from player";
     private final static String FINDBYNAME = "select * from player where name = ?";
     private final static String FINDBYID = "select * from player where player_id = ?";
     private final static String FINDBYTEAM = "select * from player where team_id = ?";
     private final static String DELETE = "delete from player where player_id = ?";
-    private final static String UPDATE = "update player set alias = ?, dorsal = ?, team = ? where player_id = ?";
+    private final static String UPDATE = "update player set player_id = ?,name = ?, last_name = ?, alias = ?, dorsal = ?, team_id = ? where player_id = ?";
     private final static String INSERT = "insert into player(player_id,name,last_name,alias,dorsal,team_id) values(?,?,?,?,?,?)";
 
     private Connection connection;
@@ -90,11 +89,6 @@ public class PlayerDAO implements DAO {
             }
     }
 
-    @Override
-    public Object save(Object entity) throws SQLException {
-        return null;
-    }
-
 
     public Player findByTeam(int id) throws SQLException {
          Player result = null;
@@ -147,35 +141,41 @@ public class PlayerDAO implements DAO {
                     pst.setString(2, entity.getName());
                     pst.setString(3, entity.getLastName());
                     pst.setString(4, entity.getAlias());
-                    pst.setInt(5,entity.getDorsal());
-                    pst.setInt(6,entity.getTeam().getTeam_id()); //FALLO AQUI
-
+                    pst.setInt(5, entity.getDorsal());
+                    pst.setInt(6, entity.getTeam().getTeam_id());
                     pst.executeUpdate();
+                    /** Team */
+                    TeamDAO tdao = new TeamDAO(this.connection);
+                    result.setTeam(teamDAO.findByid(entity.getTeam().getTeam_id()));
 
                 }
-            }else {
-            //UPDATE
-            if(p!=null)
-                playerdao.save(entity.getTeam());
-            try(PreparedStatement pst=this.connection.prepareStatement(UPDATE)){
-                pst.setString(1, entity.getAlias());
-                pst.setInt(2,entity.getDorsal());
-                pst.setObject(3,entity.getTeam());
-                pst.setInt(4,entity.getPlayer_id());
-                pst.executeUpdate();
+            } else {
+                //UPDATE
+                try (PreparedStatement pst = this.connection.prepareStatement(UPDATE)) {
+                    pst.setInt(1, entity.getPlayer_id());
+                    pst.setString(2, entity.getName());
+                    pst.setString(3, entity.getLastName());
+                    pst.setString(4, entity.getAlias());
+                    pst.setInt(5, entity.getDorsal());
+                    pst.setInt(6, entity.getTeam().getTeam_id());
+                    pst.setInt(7, entity.getPlayer_id());
+                    pst.executeUpdate();
+                    /** Team */
+                    TeamDAO tdao = new TeamDAO(this.connection);
+                    result.setTeam(teamDAO.findByid(entity.getTeam().getTeam_id()));
+                }
+                result = entity;
             }
-        }
 
-            result = entity;
         }
         return result;
     }
 
     @Override
-    public void delete(String id) throws SQLException {
-        if(id!=null) {
+    public void delete(Player p) throws SQLException {
+        if(p != null) {
             try(PreparedStatement pst=this.connection.prepareStatement(DELETE)){
-                pst.setString(1, id);
+                pst.setInt(1, p.getPlayer_id());
                 pst.executeUpdate();
                 pst.close();
             }

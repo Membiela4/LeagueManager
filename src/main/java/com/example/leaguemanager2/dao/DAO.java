@@ -1,5 +1,7 @@
 package com.example.leaguemanager2.dao;
 
+import com.example.leaguemanager2.modelDomain.Player;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,5 +14,6 @@ public interface DAO<T> extends AutoCloseable {
 
     T save(T entity) throws SQLException;
 
-    void delete(String dni) throws SQLException;
+    void delete(T o) throws SQLException;
+
 }
