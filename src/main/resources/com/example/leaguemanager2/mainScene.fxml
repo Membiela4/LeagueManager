@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="86.0" style="-fx-background-color: orange;" />
+      <Pane layoutX="119.0" layoutY="14.0" prefHeight="59.0" prefWidth="452.0" style="-fx-background-color: orange;">
+         <children>
+            <TextField alignment="CENTER" layoutX="105.0" layoutY="3.0" prefHeight="53.0" prefWidth="268.0" style="-fx-background-color: NONE;" text="MENU PRINCIPAL">
+               <font>
+                  <Font name="MS Gothic" size="27.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
+      <VBox layoutX="119.0" layoutY="110.0" prefHeight="279.0" prefWidth="452.0" style="-fx-background-color: white;">
+         <children>
+            <Pane prefHeight="88.0" prefWidth="452.0">
+               <children>
+                  <Pane prefHeight="88.0" prefWidth="152.0">
+                     <children>
+                        <Text fill="#f89100" layoutX="24.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
+                           <font>
+                              <Font name="Times New Roman Bold" size="32.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="51.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JUGADORE" wrappingWidth="141.697265625">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane prefHeight="88.0" prefWidth="452.0">
+               <children>
+                  <Pane prefHeight="88.0" prefWidth="152.0">
+                     <children>
+                        <Text fill="#f89100" layoutX="24.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2">
+                           <font>
+                              <Font name="Times New Roman Bold" size="32.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="51.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="EQUIPOS" wrappingWidth="141.697265625">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane prefHeight="88.0" prefWidth="452.0">
+               <children>
+                  <Pane prefHeight="88.0" prefWidth="152.0">
+                     <children>
+                        <Text fill="#f89100" layoutX="24.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3">
+                           <font>
+                              <Font name="Times New Roman Bold" size="32.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="51.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LIGA" wrappingWidth="141.697265625">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -100,7 +100,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.example.leaguemanager2/com.example.leaguemanager2.HelloApplication
+                            <mainClass>com.example.leaguemanager2/com.example.leaguemanager2.LeagueManagerApp
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

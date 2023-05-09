@@ -58,7 +58,7 @@ public class TeamDAO {
                 result.setTeam_id(rs.getInt("team_id"));
                 result.setAbbreviation(rs.getString("abbreviation"));
                 result.setIcon(rs.getBlob("icon"));
-                result.setPlayers(playerdao.findByTeamWhole(result.getTeam_id()));
+                result.setPlayers(playerdao.findByTeamWhole(id));
 
             }
             return result;

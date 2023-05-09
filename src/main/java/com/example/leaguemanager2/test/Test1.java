@@ -25,7 +25,8 @@ public class Test1 {
         t2.setAbbreviation("FCB");
         t2.setIcon(null);
         t2.setPlayers(null);
-        teamDAO.save(t2);
+        //teamDAO.save(t2);
+
         //TEST CREAR JUGADOR(FALLO AL ASIGNAR EL TEAM ID)
         Player p = new Player();
         p.setName("Cristiano");
@@ -33,14 +34,15 @@ public class Test1 {
         p.setAlias("CR7");
         p.setDorsal(7);
         p.setTeam(t);
-        //playerDAO.save(p);
+        playerDAO.save(p);
 
         Player p2 = new Player();
         p2.setName("Lionel");
         p2.setLastName("Messi");
         p2.setAlias("Messi");
         p2.setDorsal(10);
-        //playerDAO.save(p2);
+        p2.setTeam(t2);
+        playerDAO.save(p2);
 
 
 
