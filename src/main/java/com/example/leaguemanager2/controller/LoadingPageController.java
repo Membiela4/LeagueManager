@@ -11,9 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class LoadingPageController {
     private Runnable loadingFinishedAction;
@@ -28,15 +30,17 @@ public class LoadingPageController {
 
 
 
-
+    /*
+     this function set a timer to change the visiblity of a button that allows to enter the app
+     */
     @FXML
     void initialize() {
         changeViewBtn.setVisible(false);
-        PauseTransition loading = new PauseTransition(Duration.seconds(5));
+        PauseTransition loading = new PauseTransition(Duration.seconds(3));
         loading.setOnFinished(event -> {
 
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(5), e -> {
+                    new KeyFrame(Duration.seconds(3), e -> {
                         changeViewBtn.setVisible(true); // hacemos visible el botón después de los 5 segundos
                         })
                 );
@@ -48,13 +52,26 @@ public class LoadingPageController {
     @FXML
     public void changeView() {
         try {
-            Parent siguienteEscena = FXMLLoader.load(getClass().getResource("/views/mainScene.fxml"));
-            Scene scene = new Scene(siguienteEscena);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/mainScene.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = new Stage();
+
+            MainSceneController controller = loader.getController();
+
+            stage.setScene(scene);
+            stage.show();
+
+            stage.setOnCloseRequest(e -> changeView());
+            Stage myStage = (Stage) this.changeViewBtn.getScene().getWindow();
+            myStage.close();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public void setLoadingFinishedAction(Runnable action) {
         loadingFinishedAction = action;

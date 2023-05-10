@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TeamDAO implements DAO<Team> {
     private final static String FINDALL = "select * from team";
-    private final static String FINDBYNAME = "select * from team where name = ?";
+    private final static String FINDBYNAME = "select * from team where team_name = ?";
     private final static String FINDBYID =" select * from team where team_id = ?";
     private final static String DELETE = "delete from team where team_id = ?";
     private final static String UPDATE = "update team set team_id =?, team_name = ?, abbreviation = ?,icon = ?,num_players = ?, where team_id = ?";
@@ -38,7 +38,7 @@ public class TeamDAO implements DAO<Team> {
                     t.setTeam_id(resultSet.getInt("team_id"));
                     t.setName(resultSet.getString("team_name"));
                     t.setAbbreviation(resultSet.getString("abbreviation"));
-                    t.setIcon(null);
+                    t.setIcon(resultSet.getString("icon"));
                     t.setPlayers(playerdao.findByTeamWhole(t.getTeam_id()));
                     teams.add(t);
                 }
@@ -55,10 +55,10 @@ public class TeamDAO implements DAO<Team> {
         try(ResultSet rs = pst.executeQuery()) {
             if(rs.next()) {
                 result = new Team();
-                result.setName(rs.getString("name"));
+                result.setName(rs.getString("team_name"));
                 result.setTeam_id(rs.getInt("team_id"));
                 result.setAbbreviation(rs.getString("abbreviation"));
-                result.setIcon(rs.getBlob("icon"));
+                result.setIcon(rs.getString("icon"));
                 result.setPlayers(playerdao.findByTeamWhole(id));
 
             }
@@ -74,12 +74,11 @@ public class TeamDAO implements DAO<Team> {
         try(ResultSet rs = pst.executeQuery()) {
             if(rs.next()) {
                 result = new Team();
-                result.setName(rs.getString("name"));
+                result.setName(rs.getString("team_name"));
                 result.setTeam_id(rs.getInt("team_id"));
                 result.setAbbreviation(rs.getString("abbreviation"));
-                result.setIcon(rs.getBlob("icon"));
+                result.setIcon(rs.getString("icon"));
                 result.setPlayers(playerdao.findByTeamWhole(result.getTeam_id()));
-
 
             }
             return result;
@@ -98,7 +97,7 @@ public class TeamDAO implements DAO<Team> {
                         pst.setInt(1, entity.getTeam_id());
                         pst.setString(2, entity.getName());
                         pst.setString(3, entity.getAbbreviation());
-                        pst.setBlob(4,entity.getIcon());
+                        pst.setString(4,entity.getIcon());
                         pst.setInt(5,0); //cambiar por el tamaño del array de jugadores
                         pst.executeUpdate();
                         /** Players of team */
@@ -115,11 +114,11 @@ public class TeamDAO implements DAO<Team> {
                     }
                 }else {
                     //UPDATE
-                    try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
+                    try (PreparedStatement pst = this.connection.prepareStatement(UPDATE)) {
                         pst.setInt(1, entity.getTeam_id());
                         pst.setString(2, entity.getName());
                         pst.setString(3, entity.getAbbreviation());
-                        pst.setBlob(4, entity.getIcon());
+                        pst.setString(4,entity.getIcon());
                         pst.setInt(5, 0); //cambiar por el tamaño del array de jugadores
                         pst.executeUpdate();
                     }

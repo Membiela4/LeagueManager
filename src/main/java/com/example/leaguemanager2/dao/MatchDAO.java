@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MatchDAO  {
+public class MatchDAO implements DAO<Match>  {
     private final static String FINDALL = "select * from match";
     private final static String FINDBYID = "select * from match where match_id = ?";
     private final static String DELETE = "delete from match where match_id = ?";
@@ -45,24 +45,29 @@ public class MatchDAO  {
     }
 
 
-    public Object findByid(int id) {
+    public Match findByid(int id) {
         return null;
+    }
+
+    @Override
+    public Match findByName(String name) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public Match save(Match entity) throws SQLException {
+        return null;
+    }
+
+    @Override
+    public void delete(Match o) throws SQLException {
+
     }
 
 
     public Object findByDay(int day) throws SQLException {
         return null;
     }
-
-
-    public Object save(Object match) throws SQLException {
-        return match;
-    }
-
-    public void delete(String dni) throws SQLException {
-
-    }
-
 
     public void close() throws Exception {
 

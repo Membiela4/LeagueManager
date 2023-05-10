@@ -1,5 +1,6 @@
 package com.example.leaguemanager2.modelDomain;
 
+import java.net.URL;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Objects;
@@ -9,13 +10,13 @@ public class Team {
       private String name;
       private String abbreviation;
       private List<Player> players;
-      private Blob icon;
+      private String icon;
 
-    public Blob getIcon() {
-        return this.icon;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setIcon(Blob icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 

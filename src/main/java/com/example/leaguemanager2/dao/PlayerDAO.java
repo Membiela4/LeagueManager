@@ -15,6 +15,7 @@ public class PlayerDAO implements DAO<Player> {
     private final static String FINDBYID = "select * from player where player_id = ?";
     private final static String FINDBYTEAM = "select * from player where team_id = ?";
     private final static String DELETE = "delete from player where player_id = ?";
+    private final static String DELETEBYNAME = "delete from playere where name = ?";
     private final static String UPDATE = "update player set player_id = ?,name = ?, last_name = ?, alias = ?, dorsal = ?, team_id = ? where player_id = ?";
     private final static String INSERT = "insert into player(player_id,name,last_name,alias,dorsal,team_id) values(?,?,?,?,?,?)";
 

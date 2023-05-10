@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.leaguemanager2.controller.MainSceneController">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="86.0" style="-fx-background-color: orange;" />
       <Pane layoutX="119.0" layoutY="14.0" prefHeight="59.0" prefWidth="452.0" style="-fx-background-color: orange;">
@@ -22,7 +23,7 @@
       </Pane>
       <VBox layoutX="119.0" layoutY="110.0" prefHeight="279.0" prefWidth="452.0" style="-fx-background-color: white;">
          <children>
-            <Pane prefHeight="88.0" prefWidth="452.0">
+            <Pane prefHeight="88.0" prefWidth="452.0" style="-fx-border-color: orange;">
                <children>
                   <Pane prefHeight="88.0" prefWidth="152.0">
                      <children>
@@ -31,16 +32,20 @@
                               <Font name="Times New Roman Bold" size="32.0" />
                            </font>
                         </Text>
-                        <Text layoutX="51.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JUGADORE" wrappingWidth="141.697265625">
+                        <Text layoutX="51.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="JUGADORES" wrappingWidth="141.697265625">
                            <font>
                               <Font size="23.0" />
                            </font>
                         </Text>
                      </children>
                   </Pane>
+                  <ToggleButton fx:id="btnPlayers" layoutX="296.0" layoutY="32.0" mnemonicParsing="false" onAction="#playersScene" style="-fx-border-color: BLACK; -fx-border-width: 2; -fx-background-color: orange;" text="&gt;">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor></ToggleButton>
                </children>
             </Pane>
-            <Pane prefHeight="88.0" prefWidth="452.0">
+            <Pane prefHeight="88.0" prefWidth="452.0" style="-fx-border-color: orange;">
                <children>
                   <Pane prefHeight="88.0" prefWidth="152.0">
                      <children>
@@ -56,9 +61,13 @@
                         </Text>
                      </children>
                   </Pane>
+                  <ToggleButton fx:id="btnTeams" layoutX="295.0" layoutY="30.0" mnemonicParsing="false" onAction="#teamsScene" style="-fx-border-color: BLACK; -fx-border-width: 2; -fx-background-color: orange;" text="&gt;">
+                     <cursor>
+                        <Cursor fx:constant="OPEN_HAND" />
+                     </cursor></ToggleButton>
                </children>
             </Pane>
-            <Pane prefHeight="88.0" prefWidth="452.0">
+            <Pane prefHeight="102.0" prefWidth="452.0" style="-fx-border-color: orange;">
                <children>
                   <Pane prefHeight="88.0" prefWidth="152.0">
                      <children>
@@ -74,6 +83,7 @@
                         </Text>
                      </children>
                   </Pane>
+                  <ToggleButton layoutX="297.0" layoutY="30.0" mnemonicParsing="false" style="-fx-border-color: BLACK; -fx-border-width: 2; -fx-background-color: orange;" text="&gt;" />
                </children>
             </Pane>
          </children>
