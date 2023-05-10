@@ -32,12 +32,21 @@ public class Test1 {
 
         List<Team> teams = teamDAO.findAll();
 
+
+        List<Player> allPlayers = playerDAO.findAll();
+
+        for (Player p:
+             allPlayers) {
+            //System.out.println(p);
+        }
+
         //TEST CREAR JUGADOR(FALLO AL ASIGNAR EL TEAM ID)
         Player p = new Player();
         p.setName("Cristiano");
         p.setLastName("Ronaldo");
         p.setAlias("CR7");
         p.setDorsal(7);
+        p.setTeam(teamDAO.findByName("Madrid"));
         //playerDAO.save(p);
 
         Player p2 = new Player();
@@ -45,7 +54,14 @@ public class Test1 {
         p2.setLastName("Messi");
         p2.setAlias("Messi");
         p2.setDorsal(10);
+        p2.setTeam(teamDAO.findByName("Barca"));
         //playerDAO.save(p2);
+
+        for (Team team:
+                teams) {
+            System.out.println(team);
+        }
+
 
 
 
