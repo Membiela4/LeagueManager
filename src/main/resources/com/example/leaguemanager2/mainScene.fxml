@@ -18,7 +18,7 @@
          </children></Pane>
       <Pane layoutX="119.0" layoutY="14.0" prefHeight="59.0" prefWidth="452.0" style="-fx-background-color: orange;">
          <children>
-            <TextField alignment="CENTER" layoutX="105.0" layoutY="3.0" prefHeight="53.0" prefWidth="268.0" style="-fx-background-color: NONE;" text="MENU PRINCIPAL">
+            <TextField alignment="CENTER" editable="false" layoutX="105.0" layoutY="3.0" prefHeight="53.0" prefWidth="268.0" style="-fx-background-color: NONE;" text="MENU PRINCIPAL">
                <font>
                   <Font name="MS Gothic" size="27.0" />
                </font>

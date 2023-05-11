@@ -1,10 +1,12 @@
 package com.example.leaguemanager2.controller;
 
+import com.example.leaguemanager2.LeagueManagerApp;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,8 +18,9 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoadingPageController {
+public class LoadingPageController implements Initializable {
     private Runnable loadingFinishedAction;
 
     @FXML
@@ -57,14 +60,22 @@ public class LoadingPageController {
         loading.play();
 
     }
+
+    /*
+    Method to set the main menu view
+     */
     @FXML
     public void changeView() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/mainScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
+            //loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/mainScene.fxml"));
+
+
             Parent root = loader.load();
+
             Scene scene = new Scene(root);
             Stage stage = new Stage();
+
 
             MainSceneController controller = loader.getController();
 
@@ -85,4 +96,8 @@ public class LoadingPageController {
         loadingFinishedAction = action;
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 }

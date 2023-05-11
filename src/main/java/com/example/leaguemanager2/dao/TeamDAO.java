@@ -17,7 +17,7 @@ public class TeamDAO implements DAO<Team> {
     private final static String FINDBYID =" select * from team where team_id = ?";
     private final static String DELETE = "delete from team where team_id = ?";
     private final static String UPDATE = "update team set team_id =?, team_name = ?, abbreviation = ?,icon = ?,num_players = ?, where team_id = ?";
-    private final static String INSERT = "insert into team(team_id,team_name,abbreviation,icon,num_players) values(?,?,?,?,?)";
+    private final static String INSERT = "insert into team(team_id,team_name,abbreviation) values(?,?,?)";
 
     private Connection connection;
 
