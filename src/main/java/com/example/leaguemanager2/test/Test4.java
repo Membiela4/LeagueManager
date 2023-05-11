@@ -13,9 +13,8 @@ import java.io.InputStream;
 
 public class Test4 {
 
-
         public static void main(String[] args) {
-
+            //test to set a image with Blob
             Connection conexion;
             conexion= Connect.getConnect();
             PreparedStatement consulta = null;

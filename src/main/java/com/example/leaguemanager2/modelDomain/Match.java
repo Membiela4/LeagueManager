@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Match {
-    private String match_id; //auto-increment id of each match
+    private int match_id; //auto-increment id of each match
     private Team local; //First team which play as Local
     private Team visitor; //Second team as visitor
     private int day; //Jornada
@@ -13,12 +13,19 @@ public class Match {
 
     }
 
+    public Match(int id, Team t1, Team t2, int day) {
+        this.match_id = id;
+        this.local = t1;
+        this.visitor = t2;
+        this.day = day;
+    }
+
     //Getter and Setters
-    public String getMatch_id() {
+    public int getMatch_id() {
         return match_id;
     }
 
-    public void setMatch_id(String match_id) {
+    public void setMatch_id(int match_id) {
         this.match_id = match_id;
     }
 

@@ -15,17 +15,16 @@ public class Calendar {
 
     public List<Match> createCalendar(List<Team> teams) {
             int n = teams.size();
-            int half = n / 2;
-            int day = 1;
+            int day = 0;
 
             for (int i = 0; i < n - 1; i++) {
                 for (int j = i + 1; j < n; j++) {
                     Team local = teams.get(i);
                     Team visitor = teams.get(j);
-                     day++;
                      Match match = new Match(local, visitor, day);
                     matchs.add(match);
                 }
+                day++;
             }
             return matchs;
         }

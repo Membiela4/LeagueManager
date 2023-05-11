@@ -10,10 +10,13 @@ import java.util.List;
 
 public class Test1 {
 
+    //Testing PlayerDAO and TeamDAO
     public static void main(String[] args) throws SQLException {
+
+
         PlayerDAO playerDAO =new PlayerDAO();
         TeamDAO teamDAO = new TeamDAO();
-        /*TEST CREAR EQUIPO
+        /*TEST CREAR EQUIPO*/
         Team t = new Team();
         t.setName("Madrid");
         t.setAbbreviation("RMA");
@@ -26,9 +29,8 @@ public class Test1 {
         t2.setAbbreviation("FCB");
         t2.setIcon(null);
         t2.setPlayers(null);
-        //teamDAO.save(t2);
-         /*
-         */
+        teamDAO.save(t2);
+
 
         List<Team> teams = teamDAO.findAll();
 
