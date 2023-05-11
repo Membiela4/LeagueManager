@@ -70,7 +70,6 @@ public class PlayerDAO implements DAO<Player> {
 
     }
 
-    @Override
     public Player findByName(String name) throws SQLException {
         Player result = null;
         PreparedStatement pst =this.connection.prepareStatement(FINDBYNAME);
@@ -177,6 +176,17 @@ public class PlayerDAO implements DAO<Player> {
         if(p != null) {
             try(PreparedStatement pst=this.connection.prepareStatement(DELETE)){
                 pst.setInt(1, p.getPlayer_id());
+                pst.executeUpdate();
+                pst.close();
+            }
+
+        }
+    }
+
+    public void delete(String name) throws SQLException {
+        if(name != null) {
+            try(PreparedStatement pst=this.connection.prepareStatement(DELETEBYNAME)){
+                pst.setString(1, name);
                 pst.executeUpdate();
                 pst.close();
             }

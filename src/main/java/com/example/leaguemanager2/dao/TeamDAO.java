@@ -66,7 +66,7 @@ public class TeamDAO implements DAO<Team> {
         }
     }
 
-    @Override
+
     public Team findByName(String name) throws SQLException {
         Team result = null;
         PreparedStatement pst =this.connection.prepareStatement(FINDBYNAME);

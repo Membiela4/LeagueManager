@@ -62,6 +62,7 @@ public class MainSceneController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/teamsScene.fxml"));
+            //loader.getClass().getResource("teamsScene.fxml");
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage stage = new Stage();
