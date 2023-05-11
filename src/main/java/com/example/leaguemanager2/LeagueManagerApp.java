@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.leaguemanager2.controller.LoadingPageController;
+import javafx.stage.StageStyle;
 
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class LeagueManagerApp extends Application {
 
         LoadingPageController controller = loader.getController();
         primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setResizable(false);
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }
 

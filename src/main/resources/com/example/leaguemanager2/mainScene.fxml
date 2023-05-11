@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +12,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.leaguemanager2.controller.MainSceneController">
    <children>
-      <Pane layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="86.0" style="-fx-background-color: orange;" />
+      <Pane layoutX="14.0" layoutY="14.0" prefHeight="375.0" prefWidth="86.0" style="-fx-background-color: orange;">
+         <children>
+            <Button fx:id="closeButton" layoutX="31.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="X" />
+         </children></Pane>
       <Pane layoutX="119.0" layoutY="14.0" prefHeight="59.0" prefWidth="452.0" style="-fx-background-color: orange;">
          <children>
             <TextField alignment="CENTER" layoutX="105.0" layoutY="3.0" prefHeight="53.0" prefWidth="268.0" style="-fx-background-color: NONE;" text="MENU PRINCIPAL">

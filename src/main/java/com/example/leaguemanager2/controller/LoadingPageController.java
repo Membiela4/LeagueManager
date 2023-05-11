@@ -27,6 +27,14 @@ public class LoadingPageController {
     private ProgressBar barraDeProgreso;
     @FXML
     private Button changeViewBtn;
+    @FXML
+    private Button closeButton;
+
+    @FXML
+    private void handleCloseButtonAction() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
 
 
 
@@ -36,11 +44,11 @@ public class LoadingPageController {
     @FXML
     void initialize() {
         changeViewBtn.setVisible(false);
-        PauseTransition loading = new PauseTransition(Duration.seconds(3));
+        PauseTransition loading = new PauseTransition(Duration.seconds(2));
         loading.setOnFinished(event -> {
 
             Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(3), e -> {
+                    new KeyFrame(Duration.seconds(2), e -> {
                         changeViewBtn.setVisible(true); // hacemos visible el botón después de los 5 segundos
                         })
                 );

@@ -3,23 +3,18 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.Lighting?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane opacity="0.86" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.leaguemanager2.controller.LoadingPageController">
    <children>
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="225.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
          <Image url="@images/icon.png" />
       </ImageView>
-      <TextField alignment="TOP_CENTER" editable="false" layoutX="187.0" layoutY="212.0" prefHeight="52.0" prefWidth="227.0" style="-fx-background-color: none; -fx-text-inner-color: orange;" text="LeagueManager">
-         <font>
-            <Font name="Comic Sans MS Bold" size="25.0" />
-         </font>
-      </TextField>
       <ProgressBar fx:id="bar" layoutX="200.0" layoutY="306.0" prefWidth="200.0" style="-fx-border-color: orange;" stylesheets="@styles/progressBarStyle.css">
          <effect>
             <Lighting bumpInput="$null">
@@ -35,5 +30,11 @@
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
       </Button>
+      <Button fx:id="closeButton" layoutX="562.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="X" />
+      <Text fill="#ff9500" layoutX="208.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LeagueManager">
+         <font>
+            <Font name="Comic Sans MS Bold" size="25.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
