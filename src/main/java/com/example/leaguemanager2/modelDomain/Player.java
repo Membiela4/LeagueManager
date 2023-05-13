@@ -47,6 +47,14 @@ public class Player extends Person{
         this.alias = alias;
         this.dorsal = dorsal;
     }
+
+    public Player(String name, String lastName, String alias, int dorsal,Team team) {
+        this.setName(name);
+        this.setLastName(lastName);
+        this.setAlias(alias);
+        this.setDorsal(dorsal);
+        this.setTeam(team);
+    }
     public Player() {
         this.setPlayer_id(0); ;
         this.setName("");

@@ -51,7 +51,7 @@ public class MainSceneController implements Initializable {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
-
+            currentStage.setResizable(false);
 
             PlayersSceneController controller = loader.getController();
 
@@ -84,6 +84,7 @@ public class MainSceneController implements Initializable {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
+            currentStage.setResizable(false);
 
             TeamsSceneController controller = loader.getController();
 

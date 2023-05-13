@@ -9,6 +9,9 @@ public class Match {
     private Team visitor; //Second team as visitor
     private int day; //Jornada
 
+    private int local_result; //
+    private int visitor_result;
+
     public Match() {
 
     }
@@ -85,6 +88,10 @@ public class Match {
                 ", visitor=" + visitor.getName() +
                 ", day=" + day +
                 '}';
+    }
+
+    public boolean containsTeams(Team team1, Team team2) {
+        return (local.equals(team1) && visitor.equals(team2)) || (local.equals(team2) && visitor.equals(team1));
     }
 
 

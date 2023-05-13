@@ -1,5 +1,6 @@
 package com.example.leaguemanager2.test;
 
+import com.example.leaguemanager2.dao.MatchDAO;
 import com.example.leaguemanager2.dao.TeamDAO;
 import com.example.leaguemanager2.modelDomain.Calendar;
 import com.example.leaguemanager2.modelDomain.Match;
@@ -16,14 +17,19 @@ public class Test3 {
 
         Calendar calendar = new Calendar();
         TeamDAO teamDAO = new TeamDAO();
+        MatchDAO matchDAO = new MatchDAO();
 
         List<Team> teams = teamDAO.findAll();
         List<Match> matchs= calendar.createCalendar(teams);
 
+
+
         for (Match m:
              matchs) {
-            System.out.println(m);
+            matchDAO.save(m);
         }
+
+
 
 
 

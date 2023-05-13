@@ -22,14 +22,28 @@ public class Test1 {
         t.setAbbreviation("RMA");
         t.setIcon(null);
         t.setPlayers(null);
-        teamDAO.save(t);
+        //teamDAO.save(t);
 
         Team t2 = new Team();
         t2.setName("Barca");
         t2.setAbbreviation("FCB");
         t2.setIcon(null);
         t2.setPlayers(null);
-        teamDAO.save(t2);
+        //teamDAO.save(t2);
+
+        Team t3 = new Team();
+        t3.setName("Betis");
+        t3.setAbbreviation("RBB");
+        t3.setIcon(null);
+        t3.setPlayers(null);
+        teamDAO.save(t3);
+
+        Team t4 = new Team();
+        t4.setName("Athletic");
+        t4.setAbbreviation("ATH");
+        t4.setIcon(null);
+        t4.setPlayers(null);
+        teamDAO.save(t4);
 
 
         List<Team> teams = teamDAO.findAll();

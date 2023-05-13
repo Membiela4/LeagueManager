@@ -12,22 +12,19 @@
 
 <AnchorPane prefHeight="488.0" prefWidth="697.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.leaguemanager2.controller.TeamsSceneController">
    <children>
-      <TableView layoutX="154.0" layoutY="90.0" prefHeight="354.0" prefWidth="529.0">
+      <TableView fx:id="table" layoutX="154.0" layoutY="90.0" prefHeight="354.0" prefWidth="529.0">
          <columns>
-            <TableColumn editable="false" prefWidth="75.0" text="Id" />
-            <TableColumn prefWidth="75.0" text="Nombre" />
-            <TableColumn editable="false" prefWidth="75.0" text="Abreviacion" />
-            <TableColumn editable="false" prefWidth="75.0" text="Escudo" />
+            <TableColumn fx:id="idColumn" editable="false" prefWidth="89.0" text="Id" />
+            <TableColumn fx:id="teamNameColumn" prefWidth="227.0" text="Nombre" />
+            <TableColumn fx:id="teamAbbColumn" editable="false" prefWidth="84.0" text="Abreviacion" />
+            <TableColumn fx:id="teamIconColumn" editable="false" prefWidth="128.0" text="Escudo" />
          </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
       </TableView>
       <Pane layoutX="22.0" layoutY="19.0" prefHeight="427.0" prefWidth="111.0" style="-fx-background-color: orange;">
          <children>
-            <Button layoutX="3.0" layoutY="168.0" mnemonicParsing="false" text="Agregar Equipo" />
+            <Button fx:id="addTeamBtn" layoutX="6.0" layoutY="168.0" mnemonicParsing="false" onAction="#addTeam" text="Agregar Equipo" />
             <Button fx:id="backBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="&lt;" />
-            <Button layoutX="3.0" layoutY="210.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Editar Equipo" />
+            <Button layoutX="4.0" layoutY="214.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Editar Equipo" />
             <Button layoutX="3.0" layoutY="251.0" mnemonicParsing="false" text="Eliminar Equipo" />
             <Button fx:id="closeButton" layoutX="55.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="X" />
          </children>

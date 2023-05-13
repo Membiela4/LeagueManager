@@ -38,29 +38,6 @@ public class LoadingPageController implements Initializable {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
-
-
-
-    /*
-     this function set a timer to change the visiblity of a button that allows to enter the app
-     */
-    @FXML
-    void initialize() {
-        changeViewBtn.setVisible(false);
-        PauseTransition loading = new PauseTransition(Duration.seconds(2));
-        loading.setOnFinished(event -> {
-
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(2), e -> {
-                        changeViewBtn.setVisible(true); // hacemos visible el botón después de los 5 segundos
-                        })
-                );
-                timeline.play();
-        });
-        loading.play();
-
-    }
-
     /*
     Method to set the main menu view
      */
@@ -96,8 +73,26 @@ public class LoadingPageController implements Initializable {
         loadingFinishedAction = action;
     }
 
+    /*
+     this function set a timer to change the visiblity of a button that allows to enter the app
+     */
+
     @Override
+    @FXML
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        changeViewBtn.setVisible(false);
+        PauseTransition loading = new PauseTransition(Duration.seconds(3));
+        loading.setOnFinished(event -> {
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(3), e -> {
+                        changeViewBtn.setVisible(true); // hacemos visible el botón después de los 3 segundos
+                    })
+            );
+            timeline.play();
+        });
+        loading.play();
 
     }
 }

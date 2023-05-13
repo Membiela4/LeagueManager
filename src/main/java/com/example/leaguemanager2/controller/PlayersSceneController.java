@@ -15,9 +15,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.StageStyle;
+import org.controlsfx.control.action.Action;
+import org.w3c.dom.events.MouseEvent;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -29,7 +33,7 @@ import java.util.ResourceBundle;
 
 public class PlayersSceneController implements Initializable {
 
-    PlayerDAO playerDAO =new PlayerDAO();
+    PlayerDAO playerDAO = new PlayerDAO();
 
     @FXML
     private Button backBtn;
@@ -37,27 +41,23 @@ public class PlayersSceneController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
-    private Button addpPlayerBtn;
+    private Button addPlayerBtn;
     @FXML
     private Button deletePlayerBtn;
     @FXML
     private TableView<Player> table;
     @FXML
-    private TableColumn<Player,Integer> idColumn;
+    private TableColumn<Player, Integer> idColumn;
     @FXML
     private TableColumn<Player, String> nameColumn;
     @FXML
     private TableColumn<Player, String> aliasColumn;
     @FXML
-    private TableColumn<Player,Integer> dorsalColumn;
+    private TableColumn<Player, Integer> dorsalColumn;
     @FXML
-    private TableColumn<Player,Team> teamColumn;
+    private TableColumn<Player, Team> teamColumn;
 
-
-
-
-
-
+    private ObservableList<Player> players;
     public void closeWindows() {
     }
 
@@ -89,28 +89,84 @@ public class PlayersSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        this.idColumn.setCellFactory(new PropertyValueFactory("player_id"));
-        this.nameColumn.setCellFactory(new PropertyValueFactory("name"));
-        this.aliasColumn.setCellFactory(new PropertyValueFactory("alias"));
-        this.dorsalColumn.setCellFactory(new PropertyValueFactory("dorsal"));
-        this.teamColumn.setCellFactory(new PropertyValueFactory("team_id"));
+        players = FXCollections.observableArrayList();
 
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("player_id"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        aliasColumn.setCellValueFactory(new PropertyValueFactory<>("alias"));
+        dorsalColumn.setCellValueFactory(new PropertyValueFactory<>("dorsal"));
+        teamColumn.setCellValueFactory(new PropertyValueFactory<>("team"));
+
+        loadPlayers();
+    }
+
+    @FXML
+    private void addPlayer(ActionEvent event) {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/addPlayer.fxml"));
         try {
-            loadPlayers();
-        } catch (SQLException e) {
+            Parent root = loader.load();
+
+            AddPlayerController controller = loader.getController();
+            Scene scene =new Scene(root);
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.showAndWait();
+            
+            Player p = controller.getPlayer();
+            if(p!=null){
+                this.players.add(p);
+                this.table.refresh();
+            }
+
+
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @FXML
-    public void addPlayer() {
+    public void loadPlayers()  {
 
-    }
-
-    public void loadPlayers() throws SQLException {
-
-        List<Player> players = playerDAO.findAll();
+        List<Player> players = null;
+        try {
+            players = playerDAO.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         ObservableList<Player> playersList = FXCollections.observableArrayList(players);
         table.setItems(playersList);
     }
+    @FXML
+    private void modify(ActionEvent event) {
+        Player p = this.table.getSelectionModel().getSelectedItem();
+
+        if(p==null) {
+            //alert
+        }else{
+            try {
+                String name = this.nameColumn.getText();
+                Player aux =playerDAO.findByName(name);
+                this.table.refresh();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+    @FXML
+    private void delete(ActionEvent event) {
+        Player p = this.table.getSelectionModel().getSelectedItem();
+
+        if(p==null) {
+            //alert
+        }else{
+            players.remove(p);
+            this.table.refresh();
+        }
+    }
 }
+
+
+
+

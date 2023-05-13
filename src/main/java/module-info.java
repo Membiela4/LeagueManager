@@ -11,5 +11,6 @@ module com.example.leaguemanager2 {
     opens com.example.leaguemanager2.utils;
     exports com.example.leaguemanager2.controller;
     opens com.example.leaguemanager2.controller to javafx.fxml;
+    opens com.example.leaguemanager2.modelDomain;
 
 }

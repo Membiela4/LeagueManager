@@ -101,7 +101,7 @@ public class MatchDAO implements DAO<Match>  {
         Match result = new Match();
         if(entity==null) {
             Match m = findByid(entity.getMatch_id());
-            if(m == null) {
+            if(m != null) {
                 //INSERT
                 try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
                     pst.setInt(1, entity.getMatch_id());

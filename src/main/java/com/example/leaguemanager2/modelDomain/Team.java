@@ -60,6 +60,12 @@ public class Team {
     public Team() {
     }
 
+    public Team(int id, String name, String abbreviation) {
+        this.team_id = id;
+        this.name = name;
+        this.abbreviation = abbreviation;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -76,12 +82,6 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team{" +
-                "team_id=" + team_id +
-                ", name='" + name + '\'' +
-                ", abbreviation='" + abbreviation + '\'' +
-                ", players=" + players +
-                ", icon=" + icon +
-                '}';
+        return  name + " " + abbreviation;
     }
 }
