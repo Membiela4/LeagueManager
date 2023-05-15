@@ -41,7 +41,7 @@ public class MatchDAO implements DAO<Match>  {
                     m.setMatch_id(resultSet.getInt("match_id"));
                     m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
                     m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
-                    m.setDay(resultSet.getInt("matchweek"));
+                    m.setMatchweek(resultSet.getInt("matchweek"));
                     m.setLocal_result(resultSet.getInt("local_result"));
                     m.setVisitor_result(resultSet.getInt("visitor_result"));
                     matchs.add(m);
@@ -62,7 +62,7 @@ public class MatchDAO implements DAO<Match>  {
                     m.setMatch_id(resultSet.getInt("match_id"));
                     m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
                     m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
-                    m.setDay(resultSet.getInt("matchweek"));
+                    m.setMatchweek(resultSet.getInt("matchweek"));
                     m.setLocal_result(resultSet.getInt("local_result"));
                     m.setVisitor_result(resultSet.getInt("visitor_result"));
 
@@ -91,7 +91,7 @@ public class MatchDAO implements DAO<Match>  {
                 result.setMatch_id(rs.getInt("match_id"));
                 result.setLocal(teamDAO.findByid(rs.getInt("local_id")));
                 result.setVisitor(teamDAO.findByid(rs.getInt("visitor_id")));
-                result.setDay(rs.getInt("matchweek"));
+                result.setMatchweek(rs.getInt("matchweek"));
                 result.setLocal_result(rs.getInt("local_result"));
                 result.setVisitor_result(rs.getInt("visitor_result"));
 
@@ -114,7 +114,7 @@ public class MatchDAO implements DAO<Match>  {
                     pst.setInt(1, entity.getMatch_id());
                     pst.setInt(2, entity.getLocal().getTeam_id());
                     pst.setInt(3, entity.getVisitor().getTeam_id());
-                    pst.setInt(4,entity.getDay());
+                    pst.setInt(4,entity.getMatchweek());
                     pst.setInt(5,entity.getLocal_result());
                     pst.setInt(6,entity.getVisitor_result());
                     pst.executeUpdate();
@@ -125,7 +125,7 @@ public class MatchDAO implements DAO<Match>  {
                     pst.setInt(1, entity.getMatch_id());
                     pst.setInt(2, entity.getLocal().getTeam_id());
                     pst.setInt(3, entity.getVisitor().getTeam_id());
-                    pst.setInt(4,entity.getDay());
+                    pst.setInt(4,entity.getMatchweek());
                     pst.setInt(5,entity.getLocal_result());
                     pst.setInt(6,entity.getVisitor_result());
                     pst.setInt(7,entity.getMatch_id());
@@ -159,7 +159,7 @@ public class MatchDAO implements DAO<Match>  {
                     m.setMatch_id(resultSet.getInt("match_id"));
                     m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
                     m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
-                    m.setDay(resultSet.getInt("matchweek"));
+                    m.setMatchweek(resultSet.getInt("matchweek"));
                     m.setLocal_result(resultSet.getInt("local_result"));
                     m.setVisitor_result(resultSet.getInt("visitor_result"));
 
