@@ -23,10 +23,10 @@
       </TableView>
       <Pane layoutX="22.0" layoutY="19.0" prefHeight="427.0" prefWidth="111.0" style="-fx-background-color: orange;">
          <children>
-            <Button layoutX="3.0" layoutY="168.0" mnemonicParsing="false" text="Agregar Jugador" />
+            <Button fx:id="addPlayerBtn" layoutX="3.0" layoutY="168.0" mnemonicParsing="false" onAction="#addPlayer" text="Agregar Jugador" />
             <Button fx:id="backBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="&lt;" />
-            <Button layoutX="3.0" layoutY="210.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="104.0" text="Editar Jugador" />
-            <Button layoutX="3.0" layoutY="251.0" mnemonicParsing="false" text="Eliminar Jugador" />
+            <Button fx:id="modifyPlayer" layoutX="3.0" layoutY="210.0" mnemonicParsing="false" onAction="#modify" prefHeight="25.0" prefWidth="104.0" text="Editar Jugador" />
+            <Button fx:id="deletePlayer" layoutX="3.0" layoutY="251.0" mnemonicParsing="false" onAction="#delete" text="Eliminar Jugador" />
             <Button fx:id="closeButton" layoutX="55.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="X" />
          </children>
       </Pane>

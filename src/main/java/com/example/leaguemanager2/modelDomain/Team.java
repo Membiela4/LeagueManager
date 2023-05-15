@@ -1,24 +1,36 @@
 package com.example.leaguemanager2.modelDomain;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
+
 import java.net.URL;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Objects;
 
 public class Team {
-      private int team_id;
-      private String name;
-      private String abbreviation;
-      private List<Player> players;
-      private String icon;
+    private int team_id;
+    private String name;
+    private String abbreviation;
+    private List<Player> players;
+    //private Blob icon;
+/*
 
-    public String getIcon() {
+    public Blob getIcon() {
+        return icon.get();
+    }
+
+    public void setIcon(Blob icon) {
+        this.icon.set(icon);
+    }
+
+    public ObjectProperty<Image> iconProperty() {
         return icon;
     }
-
-    public void setIcon(String icon) {
-        this.icon = icon;
-    }
+ */
 
     public int getTeam_id() {
         return team_id;
@@ -35,7 +47,6 @@ public class Team {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getAbbreviation() {
         return abbreviation;
@@ -55,9 +66,17 @@ public class Team {
 
     public Team(String name) {
         this.name = name;
+        //this.icon = new SimpleObjectProperty<>();
+    }
+    public Team() {
+
     }
 
-    public Team() {
+    public Team(int id, String name, String abbreviation, Image icon) {
+        this.team_id = id;
+        this.name = name;
+        this.abbreviation = abbreviation;
+        //this.icon = new SimpleObjectProperty<>(icon);
     }
 
     @Override
@@ -73,15 +92,8 @@ public class Team {
         return Objects.hash(getTeam_id());
     }
 
-
     @Override
     public String toString() {
-        return "Team{" +
-                "team_id=" + team_id +
-                ", name='" + name + '\'' +
-                ", abbreviation='" + abbreviation + '\'' +
-                ", players=" + players +
-                ", icon=" + icon +
-                '}';
+        return name + " " + abbreviation;
     }
 }

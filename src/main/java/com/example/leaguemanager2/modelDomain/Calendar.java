@@ -14,18 +14,27 @@ public class Calendar {
 
 
     public List<Match> createCalendar(List<Team> teams) {
-            int n = teams.size();
-            int day = 0;
+        List<Match> matches = new ArrayList<>();
+        int n = teams.size();
+        int rounds = n - 1;
+        int matchesPerRound = n / 2;
+        int totalMatches = rounds * matchesPerRound;
 
-            for (int i = 0; i < n - 1; i++) {
-                for (int j = i + 1; j < n; j++) {
-                    Team local = teams.get(i);
-                    Team visitor = teams.get(j);
-                     Match match = new Match(local, visitor, day);
-                    matchs.add(match);
-                }
-                day++;
+        // Crear una lista auxiliar de equipos para rotar en cada ronda
+        List<Team> rotatedTeams = new ArrayList<>(teams);
+
+        for (int round = 0; round < rounds; round++) {
+            for (int match = 0; match < matchesPerRound; match++) {
+                Team local = rotatedTeams.get(match);
+                Team visitor = rotatedTeams.get(n - 1 - match);
+                Match newMatch = new Match(local, visitor, round + 1);
+                matches.add(newMatch);
             }
-            return matchs;
+
+            // Rotar los equipos en cada ronda (excepto el primero)
+            rotatedTeams.add(1, rotatedTeams.remove(rotatedTeams.size() - 1));
         }
+
+        return matches;
     }
+}
