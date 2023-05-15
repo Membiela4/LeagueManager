@@ -10,6 +10,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -24,6 +26,9 @@ public class AddTeamController implements Initializable {
     private TextField abbreviationField;
     @FXML
     private TextField teamIdField;
+
+    @FXML
+    private Image teamIconColumn;
 
     @FXML
     private Button saveBtn;
@@ -48,8 +53,9 @@ public class AddTeamController implements Initializable {
         String name = this.nameField.getText();
         String abbreviation = this.abbreviationField.getText();
         int id =  Integer.parseInt(this.teamIdField.getText());
+        Image image = (Image) this.teamIconColumn.getPixelReader();
 
-        Team t = new Team(id,name,abbreviation);
+        Team t = new Team(id,name,abbreviation,image);
 
         if(!teams.contains(t)){
             this.team = t;

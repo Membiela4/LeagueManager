@@ -12,12 +12,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -39,7 +43,7 @@ public class TeamsSceneController implements Initializable {
     @FXML
     private TableColumn<Team, String> teamAbbColumn;
     @FXML
-    private TableColumn<Team, URL> teamIconColumn;
+    private TableColumn<Team, Image> teamIconColumn;
     public ObservableList<Team> teamObservableList;
 
     TeamDAO teamDAO = new TeamDAO();
@@ -112,12 +116,11 @@ public class TeamsSceneController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         teamObservableList = FXCollections.observableArrayList();
-
         idColumn.setCellValueFactory(new PropertyValueFactory<>("team_id"));
         teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         teamAbbColumn.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
-        teamIconColumn.setCellValueFactory(new PropertyValueFactory<>("icon"));
-
         loadTeams();
     }
 }
+
+

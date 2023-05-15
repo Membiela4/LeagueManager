@@ -104,6 +104,34 @@ public class MainSceneController implements Initializable {
 
     }
 
+    @FXML
+    public void leagueView(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/leagueView.fxml"));
+
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
+            currentStage.setResizable(false);
+
+            LeagueViewController controller = loader.getController();
+
+            currentStage.setScene(scene);
+            currentStage.show();
+
+            currentStage.setOnCloseRequest(e -> controller.closeWindows());
+            currentStage = (Stage) this.btnTeams.getScene().getWindow();
+            if (currentStage != null) {
+                currentStage.close();
+            }
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

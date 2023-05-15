@@ -5,6 +5,7 @@ module com.example.leaguemanager2 {
     requires org.controlsfx.controls;
     requires java.sql;
     requires jaxb.api.osgi;
+    requires java.desktop;
 
     opens com.example.leaguemanager2 to javafx.fxml;
     exports com.example.leaguemanager2;

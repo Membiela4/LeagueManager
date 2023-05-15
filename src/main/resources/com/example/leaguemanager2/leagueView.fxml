@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.leaguemanager2.LeagueViewController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="449.0" prefWidth="699.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.leaguemanager2.controller.LeagueViewController">
+   <children>
+      <Pane layoutX="24.0" layoutY="19.0" prefHeight="410.0" prefWidth="82.0" style="-fx-background-color: orange;">
+         <children>
+            <Button layoutY="355.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" text="Clasificacion" />
+         </children></Pane>
+      <TableView fx:id="table" layoutX="116.0" layoutY="20.0" prefHeight="410.0" prefWidth="480.0">
+        <columns>
+          <TableColumn fx:id="localNameColumn" prefWidth="198.0" text="Local" />
+          <TableColumn fx:id="localResultColumn" minWidth="0.0" prefWidth="32.0" />
+            <TableColumn fx:id="visitorResultColumn" prefWidth="32.0" />
+            <TableColumn fx:id="visitorNameColumn" prefWidth="162.0" text="Visitante" />
+            <TableColumn fx:id="matchweekColumn" prefWidth="55.0" text="Jornada" />
+        </columns>
+      </TableView>
+   </children>
 </AnchorPane>

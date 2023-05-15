@@ -13,14 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MatchDAO implements DAO<Match>  {
-    private final static String FINDALL = "select * from `match`";
-    private final static String FINDBYID = "select * from `match` where match_id = ?";
+    private final static String FINDALL = "select * from `matchs`";
+    private final static String FINDBYID = "select * from `matchs` where match_id = ?";
 
-    private final static String FINDBYDAY = "select * from `match` where day = ?";
-    private final static String FINDBYTEAM = "select * from `match` where local_id = ? or visitor_id =?";
-    private final static String DELETE = "delete from `match` where match_id = ?";
-    private final static String UPDATE = "update `match` set match_id = ?,local_id =?, visitor_id = ?, day = ?  where match_id = ?";
-    private final static String INSERT = "insert into `match`(match_id,local_id,visitor_id,day) values (?,?,?,?)";
+    private final static String FINDBYDAY = "select * from `matchs` where matchweek = ?";
+    private final static String FINDBYTEAM = "select * from `matchs` where local_id = ? or visitor_id =?";
+    private final static String DELETE = "delete from `matchs` where match_id = ?";
+    private final static String UPDATE = "update `matchs` set match_id = ?,local_id =?, visitor_id = ?, matchweek = ?, local_result = ?, visitor_result = ?  where match_id = ?";
+    private final static String INSERT = "insert into `matchs`(match_id,local_id,visitor_id,matchweek,local_result, visitor_result) values (?,?,?,?,?,?)";
 
     private Connection connection;
     public MatchDAO() {this.connection = Connect.getConnect();}
@@ -41,8 +41,9 @@ public class MatchDAO implements DAO<Match>  {
                     m.setMatch_id(resultSet.getInt("match_id"));
                     m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
                     m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
-                    m.setDay(resultSet.getInt("day"));
-
+                    m.setDay(resultSet.getInt("matchweek"));
+                    m.setLocal_result(resultSet.getInt("local_result"));
+                    m.setVisitor_result(resultSet.getInt("visitor_result"));
                     matchs.add(m);
 
                 }
@@ -53,19 +54,23 @@ public class MatchDAO implements DAO<Match>  {
 
 
     public Match findByid(int id) {
+        try (PreparedStatement pst = this.connection.prepareStatement(FINDBYID)) {
+            pst.setInt(1, id);
+            try (ResultSet resultSet = pst.executeQuery()) {
+                if (resultSet.next()) {
+                    Match m = new Match();
+                    m.setMatch_id(resultSet.getInt("match_id"));
+                    m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
+                    m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
+                    m.setDay(resultSet.getInt("matchweek"));
+                    m.setLocal_result(resultSet.getInt("local_result"));
+                    m.setVisitor_result(resultSet.getInt("visitor_result"));
 
-        try(PreparedStatement pst = this.connection.prepareStatement(FINDBYID)){
-            pst.setInt(1,id);
-            try(ResultSet resultSet = pst.executeQuery()) {
-                Match m = new Match();
-                m.setMatch_id(resultSet.getInt("match_id"));
-                m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
-                m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
-                m.setDay(resultSet.getInt("day"));
+                    return m;
+                } else {
 
-                return m;
-
-
+                    return null;
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -86,7 +91,9 @@ public class MatchDAO implements DAO<Match>  {
                 result.setMatch_id(rs.getInt("match_id"));
                 result.setLocal(teamDAO.findByid(rs.getInt("local_id")));
                 result.setVisitor(teamDAO.findByid(rs.getInt("visitor_id")));
-                result.setDay(rs.getInt("day"));
+                result.setDay(rs.getInt("matchweek"));
+                result.setLocal_result(rs.getInt("local_result"));
+                result.setVisitor_result(rs.getInt("visitor_result"));
 
                 matchs.add(result);
 
@@ -99,15 +106,17 @@ public class MatchDAO implements DAO<Match>  {
     @Override
     public Match save(Match entity) throws SQLException {
         Match result = new Match();
-        if(entity==null) {
+        if(entity!=null) {
             Match m = findByid(entity.getMatch_id());
-            if(m != null) {
+            if(m== null) {
                 //INSERT
                 try (PreparedStatement pst = this.connection.prepareStatement(INSERT)) {
                     pst.setInt(1, entity.getMatch_id());
                     pst.setInt(2, entity.getLocal().getTeam_id());
                     pst.setInt(3, entity.getVisitor().getTeam_id());
                     pst.setInt(4,entity.getDay());
+                    pst.setInt(5,entity.getLocal_result());
+                    pst.setInt(6,entity.getVisitor_result());
                     pst.executeUpdate();
                 }
             }else {
@@ -117,7 +126,9 @@ public class MatchDAO implements DAO<Match>  {
                     pst.setInt(2, entity.getLocal().getTeam_id());
                     pst.setInt(3, entity.getVisitor().getTeam_id());
                     pst.setInt(4,entity.getDay());
-                    pst.setInt(5,entity.getMatch_id());
+                    pst.setInt(5,entity.getLocal_result());
+                    pst.setInt(6,entity.getVisitor_result());
+                    pst.setInt(7,entity.getMatch_id());
                     pst.executeUpdate();
                 }
             }
@@ -148,7 +159,9 @@ public class MatchDAO implements DAO<Match>  {
                     m.setMatch_id(resultSet.getInt("match_id"));
                     m.setLocal(teamDAO.findByid(resultSet.getInt("local_id")));
                     m.setVisitor(teamDAO.findByid(resultSet.getInt("visitor_id")));
-                    m.setDay(resultSet.getInt("day"));
+                    m.setDay(resultSet.getInt("matchweek"));
+                    m.setLocal_result(resultSet.getInt("local_result"));
+                    m.setVisitor_result(resultSet.getInt("visitor_result"));
 
                     return m;
 

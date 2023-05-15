@@ -75,7 +75,7 @@ public class TeamDAO implements DAO<Team> {
                 result.setName(rs.getString("team_name"));
                 result.setTeam_id(rs.getInt("team_id"));
                 result.setAbbreviation(rs.getString("abbreviation"));
-                result.setIcon(rs.getString("icon"));
+                //result.setIcon(rs.getBlob("icon"));
                 result.setPlayers(playerdao.findByTeamWhole(result.getTeam_id()));
 
             }

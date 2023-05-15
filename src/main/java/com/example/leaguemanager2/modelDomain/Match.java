@@ -7,20 +7,21 @@ public class Match {
     private int match_id; //auto-increment id of each match
     private Team local; //First team which play as Local
     private Team visitor; //Second team as visitor
-    private int day; //Jornada
-
-    private int local_result; //
+    private int matchweek; //Jornada
+    private int local_result;
     private int visitor_result;
 
     public Match() {
 
     }
 
-    public Match(int id, Team t1, Team t2, int day) {
+    public Match(int id, Team t1, Team t2, int matchweek, int local_result, int visitor_result) {
         this.match_id = id;
         this.local = t1;
         this.visitor = t2;
-        this.day = day;
+        this.matchweek = matchweek;
+        this.local_result = local_result;
+        this.visitor_result = visitor_result;
     }
 
     //Getter and Setters
@@ -49,18 +50,34 @@ public class Match {
     }
 
     public int getDay() {
-        return day;
+        return matchweek;
     }
 
     public void setDay(int day) {
-        this.day = day;
+        this.matchweek = matchweek;
+    }
+
+    public int getLocal_result() {
+        return local_result;
+    }
+
+    public void setLocal_result(int local_result) {
+        this.local_result = local_result;
+    }
+
+    public int getVisitor_result() {
+        return visitor_result;
+    }
+
+    public void setVisitor_result(int visitor_result) {
+        this.visitor_result = visitor_result;
     }
 
     //Constructors
-    public Match(Team local, Team visitor, int day) {
+    public Match(Team local, Team visitor, int matchweek) {
         this.local = local;
         this.visitor = visitor;
-        this.day = day;
+        this.matchweek = matchweek;
     }
     //Equals and HashCode
 
@@ -83,10 +100,10 @@ public class Match {
     @Override
     public String toString() {
         return "Match{" +
-                "match_id='" + match_id + '\'' +
-                ", local=" + local.getName() +
-                ", visitor=" + visitor.getName() +
-                ", day=" + day +
+                "match_id : '" + match_id + '\'' +
+                ", local : " + local.getName() +
+                ", visitor : " + visitor.getName() +
+                ", matchweek : " + matchweek +
                 '}';
     }
 

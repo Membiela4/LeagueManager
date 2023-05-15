@@ -13,9 +13,9 @@ public class Test2 {
 
         insertMatch(); //no inserta partidos en bbdd pero si que los crea
 
-        findALl();
+        //findALl();//
 
-        findTeamMatchs();
+        //findTeamMatchs();
 
     }
 
@@ -23,7 +23,7 @@ public class Test2 {
         MatchDAO matchDAO = new MatchDAO();
         TeamDAO teamDAO = new TeamDAO();
         try{
-            Match m = new Match(2,teamDAO.findByName("Madrid"),teamDAO.findByName("Barca"),2);
+            Match m = new Match(1,teamDAO.findByName("Madrid"),teamDAO.findByName("Barca"),2,0,0);
             matchDAO.save(m);
             System.out.println(m);
         }catch(SQLException e) {
