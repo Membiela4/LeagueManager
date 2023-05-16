@@ -16,6 +16,8 @@ public class Team {
     private String name;
     private String abbreviation;
     private List<Player> players;
+
+
     //private Blob icon;
 /*
 
@@ -70,6 +72,10 @@ public class Team {
     }
     public Team() {
 
+    }
+    public Team(String name, String abbreviation) {
+        this.name=name;
+        this.abbreviation=abbreviation;
     }
 
     public Team(int id, String name, String abbreviation, Image icon) {

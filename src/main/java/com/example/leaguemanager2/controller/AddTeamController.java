@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddTeamController implements Initializable {
@@ -35,11 +36,11 @@ public class AddTeamController implements Initializable {
     @FXML
     private Button saveBtn;
     @FXML
-    private Button  backBtn;
+    private Button backBtn;
 
     private Team team;
     @FXML
-    private ObservableList<Team> teams;
+    private ObservableList<Team> teamsObservableList;
     TeamDAO teamDAO = new TeamDAO();
 
     @Override
@@ -47,7 +48,7 @@ public class AddTeamController implements Initializable {
 
     }
     public void initAtributtes(ObservableList<Player> players) {
-        this.teams = teams;
+        this.teamsObservableList = teamsObservableList;
     }
 
     @FXML
@@ -55,18 +56,18 @@ public class AddTeamController implements Initializable {
         if(this.nameField!=null) {
             String name = this.nameField.getText();
             String abbreviation = this.abbreviationField.getText();
-            int id = Integer.parseInt(this.teamIdField.getText());
-            Image image = (Image) this.teamIconColumn.getPixelReader();
-            Team t = new Team(id, name, abbreviation, image);
 
+
+            Team t = new Team(name, abbreviation);
+            List<Team> teams = null;
+            try {
+                teams = teamDAO.findAll();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
             if (!teams.contains(t)) {
                 this.team = t;
-                try {
-                    teamDAO.save(t);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("INFO");
                 alert.setContentText("Añadido Correctamente");
@@ -80,6 +81,11 @@ public class AddTeamController implements Initializable {
                 alert.setContentText("Equipo ya existente");
                 alert.showAndWait();
             }
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Introduce un nombre de equipo");
+            alert.showAndWait();
         }
     }
 

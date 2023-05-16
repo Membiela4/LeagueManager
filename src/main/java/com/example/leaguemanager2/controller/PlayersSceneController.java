@@ -12,9 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TableColumn;
@@ -56,8 +54,10 @@ public class PlayersSceneController implements Initializable {
     private TableColumn<Player, Integer> dorsalColumn;
     @FXML
     private TableColumn<Player, Team> teamColumn;
+    @FXML
+    private Button refreshBtn;
 
-    private ObservableList<Player> players;
+    private ObservableList<Player> playersList;
     public void closeWindows() {
     }
 
@@ -89,7 +89,7 @@ public class PlayersSceneController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        players = FXCollections.observableArrayList();
+        playersList = FXCollections.observableArrayList();
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("player_id"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -115,26 +115,30 @@ public class PlayersSceneController implements Initializable {
             stage.showAndWait();
             
             Player p = controller.getPlayer();
-            if(p!=null){
-                this.players.add(p);
-                this.table.refresh();
+            if (p != null) {
+                playerDAO.save(p);
+                playersList.add(p);
+                loadPlayers();
             }
-
-
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void loadPlayers()  {
-
         List<Player> players = null;
         try {
             players = playerDAO.findAll();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        ObservableList<Player> playersList = FXCollections.observableArrayList(players);
+
+        playersList.clear();
+
+        playersList.addAll(players);
+
         table.setItems(playersList);
     }
     @FXML
@@ -159,11 +163,23 @@ public class PlayersSceneController implements Initializable {
         Player p = this.table.getSelectionModel().getSelectedItem();
 
         if(p==null) {
-            //alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("no se ha encontrado jugador");
+            alert.showAndWait();
         }else{
-            players.remove(p);
+            playersList.remove(p);
+            try {
+                playerDAO.delete(p);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             this.table.refresh();
         }
+    }
+    @FXML
+    private void refresh() {
+        this.table.refresh();
     }
 }
 

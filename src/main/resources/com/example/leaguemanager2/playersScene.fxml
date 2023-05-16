@@ -44,5 +44,6 @@
             <Image url="@images/icon.png" />
          </image>
       </ImageView>
+      <Button fx:id="refreshBtn" layoutX="693.0" layoutY="119.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
    </children>
 </AnchorPane>

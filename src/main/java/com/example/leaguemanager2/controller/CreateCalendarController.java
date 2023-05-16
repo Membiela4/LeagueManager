@@ -20,10 +20,11 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CreateCalendarController  implements Initializable {
+public class CreateCalendarController implements Initializable {
 
     private Match match;
     private List<Team> teams;
@@ -39,6 +40,8 @@ public class CreateCalendarController  implements Initializable {
     private TableColumn<Team, String> teamNameColumn;
     @FXML
     private TableColumn<Team, String> teamAbbColumn;
+    @FXML
+    private Button refreshBtn;
     public ObservableList<Team> teamObservableList;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -48,6 +51,7 @@ public class CreateCalendarController  implements Initializable {
             teamNameColumn.setCellFactory(new PropertyValueFactory("name"));
             teamAbbColumn.setCellFactory(new PropertyValueFactory("abbreviation"));
             comboBoxTeams.setItems(FXCollections.observableArrayList(allTeams));
+            tableTeams.setItems(teamObservableList);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -78,20 +82,28 @@ public class CreateCalendarController  implements Initializable {
 
     @FXML
     private void addTeam(ActionEvent event) {
+        List<Team> teams = new ArrayList<>();
         Team choosedTeam = (Team) comboBoxTeams.getValue();
-        if (choosedTeam != null) {
+        if (choosedTeam != null && !teams.contains(choosedTeam)) {
             teams.add(choosedTeam);
+        }else{
+          Alert alert = new Alert(Alert.AlertType.ERROR);
+          alert.setTitle("ERROR");
+          alert.setContentText("Escoge un equipo valido");
         }
-        teamObservableList.add(choosedTeam);
+        ObservableList<Team> teamObservableList = FXCollections.observableArrayList(teams);
         tableTeams.refresh();
     }
 
 
-    public List<Team> getTeams() {return teams;
-    }
+    public List<Team> getTeams() {return teams;}
     @FXML
     private void handleCloseButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
+    }
+    @FXML
+    private void refresh(ActionEvent event) {
+        this.tableTeams.refresh();
     }
 }
