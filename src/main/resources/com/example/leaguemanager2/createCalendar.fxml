@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="427.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.leaguemanager2.controller.CreateCalendarController">
+
+    <ComboBox fx:id="comboBoxTeams" layoutX="50.0" layoutY="65.0" prefWidth="200" />
+
+    <Button layoutX="50.0" layoutY="110.0" onAction="#addTeam" text="Agregar" />
+    <TableView fx:id="tableTeams" layoutX="37.0" layoutY="147.0" prefHeight="256.0" prefWidth="288.0">
+        <columns>
+            <TableColumn fx:id="teamNameColumn" prefWidth="182.0" text="Nombre" />
+            <TableColumn fx:id="teamAbbColumn" prefWidth="104.0" text="Abreviacion" />
+        </columns>
+    </TableView>
+   <Text layoutX="50.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Selecciona equipos" />
+   <Button fx:id="closeButton" layoutX="313.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="X" />
+
+    </AnchorPane>

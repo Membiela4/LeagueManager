@@ -14,6 +14,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -45,16 +46,12 @@ public class LoadingPageController implements Initializable {
     public void changeView() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
-            //loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/mainScene.fxml"));
-
 
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
             Stage stage = new Stage();
-
-
-            MainSceneController controller = loader.getController();
+            stage.initStyle(StageStyle.UNDECORATED);
 
             stage.setScene(scene);
             stage.show();
@@ -88,6 +85,7 @@ public class LoadingPageController implements Initializable {
             Timeline timeline = new Timeline(
                     new KeyFrame(Duration.seconds(3), e -> {
                         changeViewBtn.setVisible(true); // hacemos visible el botón después de los 3 segundos
+
                     })
             );
             timeline.play();

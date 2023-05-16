@@ -26,7 +26,7 @@ public class Test3 {
 
         for (Match m:
              matchs) {
-            //matchDAO.save(m);
+            matchDAO.save(m);
             System.out.println(m);
         }
 

@@ -1,5 +1,6 @@
 package com.example.leaguemanager2.controller;
 
+import com.example.leaguemanager2.dao.TeamDAO;
 import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.modelDomain.Team;
 import javafx.collections.ObservableList;
@@ -15,6 +16,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddTeamController implements Initializable {
@@ -38,6 +40,7 @@ public class AddTeamController implements Initializable {
     private Team team;
     @FXML
     private ObservableList<Team> teams;
+    TeamDAO teamDAO = new TeamDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -49,28 +52,34 @@ public class AddTeamController implements Initializable {
 
     @FXML
     public void saveTeam(ActionEvent event) {
+        if(this.nameField!=null) {
+            String name = this.nameField.getText();
+            String abbreviation = this.abbreviationField.getText();
+            int id = Integer.parseInt(this.teamIdField.getText());
+            Image image = (Image) this.teamIconColumn.getPixelReader();
+            Team t = new Team(id, name, abbreviation, image);
 
-        String name = this.nameField.getText();
-        String abbreviation = this.abbreviationField.getText();
-        int id =  Integer.parseInt(this.teamIdField.getText());
-        Image image = (Image) this.teamIconColumn.getPixelReader();
 
-        Team t = new Team(id,name,abbreviation,image);
+            if (!teams.contains(t)) {
+                this.team = t;
+                try {
+                    teamDAO.save(t);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INFO");
+                alert.setContentText("Añadido Correctamente");
+                alert.showAndWait();
 
-        if(!teams.contains(t)){
-            this.team = t;
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("INFO");
-            alert.setContentText("Añadido Correctamente");
-            alert.showAndWait();
-
-            Stage stage = (Stage) this.saveBtn.getScene().getWindow();
-            stage.close();
-        }else{
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("ERROR");
-            alert.setContentText("Equipo ya existente");
-            alert.showAndWait();
+                Stage stage = (Stage) this.saveBtn.getScene().getWindow();
+                stage.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("ERROR");
+                alert.setContentText("Equipo ya existente");
+                alert.showAndWait();
+            }
         }
     }
 

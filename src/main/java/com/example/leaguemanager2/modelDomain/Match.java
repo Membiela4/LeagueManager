@@ -49,11 +49,11 @@ public class Match {
         this.visitor = visitor;
     }
 
-    public int getDay() {
+    public int getMatchweek() {
         return matchweek;
     }
 
-    public void setDay(int day) {
+    public void setMatchweek(int matchweek) {
         this.matchweek = matchweek;
     }
 
