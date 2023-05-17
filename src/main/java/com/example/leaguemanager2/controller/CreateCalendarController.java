@@ -91,19 +91,20 @@ public class CreateCalendarController implements Initializable {
     @FXML
     private void addTeam(ActionEvent event) {
         Team chosenTeam = comboBoxTeams.getValue();
-        if (chosenTeam != null && !teamObservableList.contains(chosenTeam)) {
-            teamObservableList.add(chosenTeam);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("INFO");
-            alert.setContentText("Añadido Correctamente");
-            alert.showAndWait();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("ERROR");
-            alert.setContentText("Escoge un equipo válido");
-            alert.showAndWait();
-        }
+            if (chosenTeam != null && !teamObservableList.contains(chosenTeam)) {
+                teamObservableList.add(chosenTeam);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INFO");
+                alert.setContentText("Añadido Correctamente");
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setContentText("Escoge un equipo válido");
+                alert.showAndWait();
+            }
     }
+
 
     @FXML
     private void handleCloseButtonAction() {
@@ -116,6 +117,6 @@ public class CreateCalendarController implements Initializable {
         tableTeams.refresh();
     }
     public List<Team> getTeams(){
-        return teams;
+        return (List<Team>)teamObservableList;
     }
 }

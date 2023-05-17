@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,6 +27,7 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -37,9 +39,15 @@ public class LeagueViewController implements Initializable {
     @FXML
     private Button closeButton;
     @FXML
+    private Button setResultBtn;
+    @FXML
+    private Button deleteBtn;
+    @FXML
     private TableView<Match> table;
     @FXML
     private Button createCalendar;
+    @FXML
+    public Button addTeamsToCalendar;
     private List<Team> teams;
     private List<Match> matchs;
     TeamDAO teamDAO = new TeamDAO();
@@ -98,24 +106,10 @@ public class LeagueViewController implements Initializable {
         Stage myStage = (Stage) this.backButton.getScene().getWindow();
         myStage.close();
 
-    }    @FXML
-    private void modify(ActionEvent event) {
-        Match m = this.table.getSelectionModel().getSelectedItem();
-
-        if(m==null) {
-            //alert
-        }else{
-            int local_result = this.localResultColumn.getCellData(m);
-            int visitor_result = this.visitorResultColumn.getCellData(m);
-            Match aux =matchDAO.findByid(m.getMatch_id());
-            this.table.refresh();
-
-        }
     }
 
-
     @FXML
-    private void addTeamsToCalendar(ActionEvent event) {
+    private List<Team> addTeamsToCalendar() {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/createCalendar.fxml"));
         try {
             Parent root = loader.load();
@@ -128,15 +122,45 @@ public class LeagueViewController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
 
-            List<Team> calendarTeams = controller.getTeams();
-            Calendar calendar = new Calendar();
-            matchs = calendar.createCalendar(calendarTeams);
 
+            return controller.getTeams();
 
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    public void createCalendar(ActionEvent event) throws SQLException {
+
+        Calendar calendar = new Calendar();
+        List<Team> teams = addTeamsToCalendar();
+
+        List<Match> calendarMatchs = new ArrayList<>(calendar.createCalendar(teams));
+
+        for (Match m:calendarMatchs) {
+            matchDAO.save(m);
+        }
+        this.table.refresh();
+
+    }
+
+    @FXML
+    public void cleanTable(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("VAS A ELIMINAR EL CALENDARIO");
+        alert.setContentText("¿Estas seguro de que deseas eliminar todo el calendario?");
+        alert.showAndWait();
+        for (Match m:matchs) {
+            try {
+                matchDAO.delete(m);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            this.table.refresh();
+        }
+
     }
 
 
@@ -145,5 +169,35 @@ public class LeagueViewController implements Initializable {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
         currentStage = (Stage) closeButton.getScene().getWindow();
         currentStage.close();
+    }
+
+    @FXML
+    private void setResult(ActionEvent event) {
+        Match selectedMatch = table.getSelectionModel().getSelectedItem();
+
+        if (selectedMatch == null) {
+            // Mostrar una alerta indicando que no se ha seleccionado ningún partido
+        } else {
+            int localResult = localResultColumn.getCellData(selectedMatch);
+            int visitorResult = visitorResultColumn.getCellData(selectedMatch);
+            Match matchToUpdate = matchDAO.findByid(selectedMatch.getMatch_id());
+
+
+            matchToUpdate.setLocal_result(localResult);
+            matchToUpdate.setVisitor_result(visitorResult);
+            try {
+                matchDAO.save(matchToUpdate);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("INFO");
+                alert.setContentText("resultado actualizado correctamente");
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("ERROR");
+                alert.setContentText("No se ha podido actualizar el resultado");
+                throw new RuntimeException(e);
+            }
+
+            table.refresh();
+        }
     }
 }

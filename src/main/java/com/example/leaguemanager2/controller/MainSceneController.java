@@ -77,9 +77,6 @@ public class MainSceneController implements Initializable {
     public void teamsScene(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/teamsScene.fxml"));
-            //loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/teamsScene.fxml"));
-            //URL url = getClass().getClassLoader().getResource("teamsScene.fxml");
-            //loader.setLocation(url);
 
             Parent root = loader.load();
             Scene scene = new Scene(root);

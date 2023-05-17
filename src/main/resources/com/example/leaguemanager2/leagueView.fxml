@@ -10,10 +10,12 @@
    <children>
       <Pane layoutX="24.0" layoutY="19.0" prefHeight="410.0" prefWidth="82.0" style="-fx-background-color: orange;">
          <children>
-            <Button layoutY="355.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="82.0" text="Clasificacion" />
+            <Button layoutX="9.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Clasificacion" />
             <Button fx:id="backButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" text="&lt;" />
             <Button fx:id="closeButton" layoutX="44.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCloseButtonAction" text="X" />
-            <Button fx:id="createCalendar" layoutX="6.0" layoutY="195.0" mnemonicParsing="false" onAction="#addTeamsToCalendar" prefHeight="28.0" prefWidth="64.0" text="CREAR CALENDARIO" textAlignment="RIGHT" textOverrun="CLIP" />
+            <Button fx:id="setResultBtn" layoutX="6.0" layoutY="161.0" mnemonicParsing="false" onAction="#setResult" prefHeight="28.0" prefWidth="64.0" text="RESULT" />
+            <Button fx:id="deleteBtn" layoutX="7.0" layoutY="126.0" mnemonicParsing="false" onAction="#cleanTable" text="BORRAR" />
+            <Button fx:id="createCalendar" layoutX="6.0" layoutY="205.0" mnemonicParsing="false" onAction="#createCalendar" prefHeight="28.0" prefWidth="64.0" text="CREAR" textAlignment="RIGHT" textOverrun="CLIP" />
          </children></Pane>
       <TableView fx:id="table" layoutX="159.0" layoutY="19.0" prefHeight="410.0" prefWidth="480.0">
         <columns>

@@ -57,6 +57,7 @@ public class LoadingPageController implements Initializable {
 
             stage.setOnCloseRequest(e -> changeView());
             Stage myStage = (Stage) this.changeViewBtn.getScene().getWindow();
+
             myStage.close();
 
         } catch (IOException e) {
@@ -78,6 +79,12 @@ public class LoadingPageController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         changeViewBtn.setVisible(false);
+        timer();
+
+
+    }
+
+    public void timer() {
         PauseTransition loading = new PauseTransition(Duration.seconds(3));
         loading.setOnFinished(event -> {
 
@@ -90,6 +97,5 @@ public class LoadingPageController implements Initializable {
             timeline.play();
         });
         loading.play();
-
     }
 }
