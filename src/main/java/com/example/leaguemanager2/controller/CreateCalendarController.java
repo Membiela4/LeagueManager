@@ -28,36 +28,43 @@ public class CreateCalendarController implements Initializable {
 
     private Match match;
     private List<Team> teams;
-    TeamDAO teamDAO = new TeamDAO();
+    private TeamDAO teamDAO = new TeamDAO();
+
     @FXML
-    private ComboBox comboBoxTeams;
+    private ComboBox<Team> comboBoxTeams;
+
     @FXML
     private Button closeButton;
 
     @FXML
     private TableView<Team> tableTeams;
+
     @FXML
     private TableColumn<Team, String> teamNameColumn;
+
     @FXML
     private TableColumn<Team, String> teamAbbColumn;
+
     @FXML
     private Button refreshBtn;
-    public ObservableList<Team> teamObservableList;
+
+    private ObservableList<Team> teamObservableList;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        List<Team> allTeams = null;
         try {
-            allTeams = teamDAO.findAll();
-            teamNameColumn.setCellFactory(new PropertyValueFactory("name"));
-            teamAbbColumn.setCellFactory(new PropertyValueFactory("abbreviation"));
+            List<Team> allTeams = teamDAO.findAll();
+            teamObservableList = FXCollections.observableArrayList();
+            teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+            teamAbbColumn.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
             comboBoxTeams.setItems(FXCollections.observableArrayList(allTeams));
             tableTeams.setItems(teamObservableList);
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        comboBoxTeams.setCellFactory(param -> new ListCell<Team>() {
 
+        comboBoxTeams.setCellFactory(param -> new ListCell<Team>() {
+            @Override
             protected void updateItem(Team team, boolean empty) {
                 super.updateItem(team, empty);
                 if (empty || team == null) {
@@ -67,9 +74,10 @@ public class CreateCalendarController implements Initializable {
                 }
             }
         });
-        comboBoxTeams.setButtonCell(new ListCell<Team>() {
 
-            protected void updateItem( Team team, boolean empty) {
+        comboBoxTeams.setButtonCell(new ListCell<Team>() {
+            @Override
+            protected void updateItem(Team team, boolean empty) {
                 super.updateItem(team, empty);
                 if (empty || team == null) {
                     setText(null);
@@ -82,28 +90,32 @@ public class CreateCalendarController implements Initializable {
 
     @FXML
     private void addTeam(ActionEvent event) {
-        List<Team> teams = new ArrayList<>();
-        Team choosedTeam = (Team) comboBoxTeams.getValue();
-        if (choosedTeam != null && !teams.contains(choosedTeam)) {
-            teams.add(choosedTeam);
-        }else{
-          Alert alert = new Alert(Alert.AlertType.ERROR);
-          alert.setTitle("ERROR");
-          alert.setContentText("Escoge un equipo valido");
+        Team chosenTeam = comboBoxTeams.getValue();
+        if (chosenTeam != null && !teamObservableList.contains(chosenTeam)) {
+            teamObservableList.add(chosenTeam);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("INFO");
+            alert.setContentText("Añadido Correctamente");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Escoge un equipo válido");
+            alert.showAndWait();
         }
-        ObservableList<Team> teamObservableList = FXCollections.observableArrayList(teams);
-        tableTeams.refresh();
     }
 
-
-    public List<Team> getTeams() {return teams;}
     @FXML
     private void handleCloseButtonAction() {
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
+
     @FXML
     private void refresh(ActionEvent event) {
-        this.tableTeams.refresh();
+        tableTeams.refresh();
+    }
+    public List<Team> getTeams(){
+        return teams;
     }
 }

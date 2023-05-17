@@ -2,6 +2,7 @@ package com.example.leaguemanager2.controller;
 
 import com.example.leaguemanager2.dao.MatchDAO;
 import com.example.leaguemanager2.dao.TeamDAO;
+import com.example.leaguemanager2.modelDomain.Calendar;
 import com.example.leaguemanager2.modelDomain.Match;
 import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.modelDomain.Team;
@@ -128,6 +129,10 @@ public class LeagueViewController implements Initializable {
             stage.showAndWait();
 
             List<Team> calendarTeams = controller.getTeams();
+            Calendar calendar = new Calendar();
+            matchs = calendar.createCalendar(calendarTeams);
+
+
 
         } catch (IOException e) {
             throw new RuntimeException(e);
