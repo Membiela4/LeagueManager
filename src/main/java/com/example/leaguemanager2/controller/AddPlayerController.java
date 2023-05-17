@@ -1,7 +1,10 @@
 package com.example.leaguemanager2.controller;
 
+import com.example.leaguemanager2.dao.PlayerDAO;
+import com.example.leaguemanager2.dao.TeamDAO;
 import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.modelDomain.Team;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,16 +12,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddPlayerController implements Initializable {
@@ -32,22 +35,32 @@ public class AddPlayerController implements Initializable {
     @FXML
     private TextField dorsalField;
     @FXML
-    private ChoiceBox teamField;
-    @FXML
     private Button saveBtn;
     @FXML
     private Button  backBtn;
+    @FXML
+    private ComboBox teamField;
 
     private Player player;
-    @FXML
-    private ObservableList<Player> players;
+
+    private ObservableList<Team> allTeams;
+
+    private List<Player> players;
+    PlayerDAO playerdao = new PlayerDAO();
+    TeamDAO teamDAO = new TeamDAO();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        List<Team> allTeams = null;
 
-    }
-    public void initAtributtes(ObservableList<Player> players) {
-        this.players = players;
+        try {
+            players = playerdao.findAll();
+            allTeams = teamDAO.findAll();
+            teamField.setItems(FXCollections.observableArrayList(allTeams));
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -67,7 +80,6 @@ public class AddPlayerController implements Initializable {
              alert.setTitle("INFO");
              alert.setContentText("Añadido Correctamente");
              alert.showAndWait();
-
              Stage stage = (Stage) this.saveBtn.getScene().getWindow();
              stage.close();
          }else{

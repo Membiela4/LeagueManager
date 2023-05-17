@@ -26,7 +26,6 @@ public class LoadingPageController implements Initializable {
 
     @FXML
     private BorderPane bp;
-
     @FXML
     private ProgressBar barraDeProgreso;
     @FXML

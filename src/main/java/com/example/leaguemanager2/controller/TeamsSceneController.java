@@ -93,7 +93,7 @@ public class TeamsSceneController implements Initializable {
             Parent root = loader.load();
 
             AddTeamController controller = loader.getController();
-            Scene scene =new Scene(root);
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.UNDECORATED);
@@ -101,24 +101,24 @@ public class TeamsSceneController implements Initializable {
             stage.showAndWait();
 
             Team t = controller.getTeam();
-            if(t!=null){
-                this.teamObservableList.add(t);
-                this.table.refresh();
+            if (t != null) {
+                teamDAO.save(t);
+                teamObservableList.add(t);
+                loadTeams(); // Llama al método loadTeams() para actualizar la tabla
             }
-
-
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         teamObservableList = FXCollections.observableArrayList();
         idColumn.setCellValueFactory(new PropertyValueFactory<>("team_id"));
         teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         teamAbbColumn.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
+        table.setItems(teamObservableList); // Actualiza la tabla con la lista observable
         loadTeams();
     }
 }
