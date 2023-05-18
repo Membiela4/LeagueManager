@@ -48,7 +48,11 @@ public class TeamsSceneController implements Initializable {
 
     TeamDAO teamDAO = new TeamDAO();
 
-    public void back() throws IOException {
+    /*
+    Button that regret to the main scene
+     */
+    @FXML
+    public void back(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -58,6 +62,7 @@ public class TeamsSceneController implements Initializable {
         MainSceneController controller = loader.getController();
 
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
         stage.setOnCloseRequest(e -> controller.closeWindows());
@@ -104,7 +109,7 @@ public class TeamsSceneController implements Initializable {
             if (t != null) {
                 teamDAO.save(t);
                 teamObservableList.add(t);
-                loadTeams(); // Llama al método loadTeams() para actualizar la tabla
+                loadTeams(); // call loadTeams to set allteams to table
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -118,7 +123,7 @@ public class TeamsSceneController implements Initializable {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("team_id"));
         teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         teamAbbColumn.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
-        table.setItems(teamObservableList); // Actualiza la tabla con la lista observable
+        table.setItems(teamObservableList);
         loadTeams();
     }
 }

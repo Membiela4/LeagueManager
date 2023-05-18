@@ -101,6 +101,7 @@ public class LeagueViewController implements Initializable {
         MainSceneController controller = loader.getController();
 
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
         stage.setOnCloseRequest(e -> controller.closeWindows());
@@ -119,7 +120,7 @@ public class LeagueViewController implements Initializable {
             Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            //stage.initStyle(StageStyle.UNDECORATED);
+            stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.showAndWait();
 

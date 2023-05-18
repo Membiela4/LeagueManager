@@ -70,7 +70,6 @@ public class PlayersSceneController implements Initializable {
 
     public void back() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
-        //loader.setLocation(new URL("file:/C:/Users/Acer%20E15/Desktop/Programación/LeagueManager/src/main/resources/com/example/leaguemanager2/mainScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -78,6 +77,7 @@ public class PlayersSceneController implements Initializable {
         MainSceneController controller = loader.getController();
 
         stage.setScene(scene);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.show();
 
         stage.setOnCloseRequest(e -> controller.closeWindows());

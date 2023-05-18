@@ -4,6 +4,7 @@ import com.example.leaguemanager2.dao.MatchDAO;
 import com.example.leaguemanager2.dao.TeamDAO;
 import com.example.leaguemanager2.modelDomain.Match;
 import com.example.leaguemanager2.modelDomain.Team;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 
@@ -14,13 +15,12 @@ import static org.testng.AssertJUnit.assertEquals;
 
 public class Test2 {
     static TeamDAO teamDAO;
-
+    @BeforeClass
     public static void setUpDAO() {
         teamDAO = new TeamDAO();
     }
 
     @Test
-
     void testSave() throws SQLException {
 
         assertEquals(true, insertTeam());
@@ -31,6 +31,26 @@ public class Test2 {
         assertEquals(teamDAO.findAll(), findALlTeams());
     }
 
+
+    @Test
+     void removeTest(){
+        try {
+            assertEquals(true,removeTeam());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    boolean removeTeam() throws SQLException {
+        boolean result = false;
+         Team t =teamDAO.findByid(99);
+         if(t!=null){
+             teamDAO.delete(t);
+             result = true;
+         }
+
+        return result;
+    }
     public static boolean insertTeam() throws SQLException {
         TeamDAO teamDAO = new TeamDAO();
         boolean flag = false;
@@ -46,8 +66,6 @@ public class Test2 {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
         if (flag) {
             return flag;
         } else {

@@ -34,7 +34,6 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.2</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -51,11 +50,6 @@
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api-osgi</artifactId>
             <version>2.2.7</version>
-        </dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.32</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
@@ -90,9 +84,16 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
+            <version>7.7.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -105,6 +106,11 @@
                     <source>19</source>
                     <target>19</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>RELEASE</version>
             </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
