@@ -143,7 +143,7 @@ public class MatchDAO implements DAO<Match>  {
             try(PreparedStatement pst=this.connection.prepareStatement(DELETE)){
                 pst.setInt(1, m.getMatch_id());
                 pst.executeUpdate();
-                pst.close();
+
             }
 
         }

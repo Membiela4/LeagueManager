@@ -6,6 +6,7 @@ module com.example.leaguemanager2 {
     requires java.sql;
     requires jaxb.api.osgi;
     requires java.desktop;
+    requires org.testng;
 
     opens com.example.leaguemanager2 to javafx.fxml;
     exports com.example.leaguemanager2;

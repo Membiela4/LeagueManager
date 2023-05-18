@@ -68,7 +68,7 @@ public class LeagueViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        matchObservableList= FXCollections.observableArrayList();
+        matchObservableList = FXCollections.observableArrayList();
         localNameColumn.setCellValueFactory(new PropertyValueFactory<>("local"));
         localResultColumn.setCellValueFactory(new PropertyValueFactory<>("local_result"));
         visitorNameColumn.setCellValueFactory(new PropertyValueFactory<>("visitor"));
@@ -91,6 +91,7 @@ public class LeagueViewController implements Initializable {
 
     public void closeWindows() {
     }
+
     public void back() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
         Parent root = loader.load();
@@ -115,10 +116,10 @@ public class LeagueViewController implements Initializable {
             Parent root = loader.load();
 
             CreateCalendarController controller = loader.getController();
-            Scene scene =new Scene(root);
+            Scene scene = new Scene(root);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.UNDECORATED);
+            //stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.showAndWait();
 
@@ -139,7 +140,7 @@ public class LeagueViewController implements Initializable {
 
         List<Match> calendarMatchs = new ArrayList<>(calendar.createCalendar(teams));
 
-        for (Match m:calendarMatchs) {
+        for (Match m : calendarMatchs) {
             matchDAO.save(m);
         }
         this.table.refresh();
@@ -152,7 +153,7 @@ public class LeagueViewController implements Initializable {
         alert.setTitle("VAS A ELIMINAR EL CALENDARIO");
         alert.setContentText("¿Estas seguro de que deseas eliminar todo el calendario?");
         alert.showAndWait();
-        for (Match m:matchs) {
+        for (Match m : matchs) {
             try {
                 matchDAO.delete(m);
             } catch (SQLException e) {
@@ -166,7 +167,8 @@ public class LeagueViewController implements Initializable {
 
     @FXML
     private void handleCloseButtonAction(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        ;
         currentStage = (Stage) closeButton.getScene().getWindow();
         currentStage.close();
     }
@@ -176,28 +178,29 @@ public class LeagueViewController implements Initializable {
         Match selectedMatch = table.getSelectionModel().getSelectedItem();
 
         if (selectedMatch == null) {
-            // Mostrar una alerta indicando que no se ha seleccionado ningún partido
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Selecciona un equipo");
+            alert.show();
         } else {
-            int localResult = localResultColumn.getCellData(selectedMatch);
-            int visitorResult = visitorResultColumn.getCellData(selectedMatch);
-            Match matchToUpdate = matchDAO.findByid(selectedMatch.getMatch_id());
-
-
-            matchToUpdate.setLocal_result(localResult);
-            matchToUpdate.setVisitor_result(visitorResult);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/setResultScene.fxml"));
             try {
-                matchDAO.save(matchToUpdate);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("INFO");
-                alert.setContentText("resultado actualizado correctamente");
-            } catch (SQLException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("ERROR");
-                alert.setContentText("No se ha podido actualizar el resultado");
+                Parent root = loader.load();
+
+                SetResultController controller = loader.getController();
+                controller.setMatch(selectedMatch);
+
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.showAndWait();
+
+                table.refresh();
+            } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-
-            table.refresh();
         }
     }
 }
