@@ -47,7 +47,7 @@ public class MainSceneController implements Initializable {
     @FXML
     public void playersScene(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/playersScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/playersScene.fxml"));
             Parent root = loader.load();
             Scene scene = new Scene(root);
             Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
@@ -76,7 +76,7 @@ public class MainSceneController implements Initializable {
     @FXML
     public void teamsScene(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/teamsScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/teamsScene.fxml"));
 
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -104,7 +104,7 @@ public class MainSceneController implements Initializable {
     @FXML
     public void leagueView(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/leagueView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/leagueView.fxml"));
 
             Parent root = loader.load();
             Scene scene = new Scene(root);

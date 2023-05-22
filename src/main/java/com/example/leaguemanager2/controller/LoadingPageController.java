@@ -44,7 +44,7 @@ public class LoadingPageController implements Initializable {
     @FXML
     public void changeView() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/mainScene.fxml"));
 
             Parent root = loader.load();
 

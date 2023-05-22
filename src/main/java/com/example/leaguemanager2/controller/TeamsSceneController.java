@@ -11,10 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -37,6 +34,8 @@ public class TeamsSceneController implements Initializable {
     @FXML
     private TableView<Team> table;
     @FXML
+    private Button deleteBtn;
+    @FXML
     private TableColumn<Team,Integer> idColumn;
     @FXML
     private TableColumn<Team, String> teamNameColumn;
@@ -51,9 +50,19 @@ public class TeamsSceneController implements Initializable {
     /*
     Button that regret to the main scene
      */
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        teamObservableList = FXCollections.observableArrayList();
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("team_id"));
+        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        teamAbbColumn.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
+        table.setItems(teamObservableList);
+        loadTeams();
+    }
     @FXML
     public void back(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/mainScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -93,7 +102,7 @@ public class TeamsSceneController implements Initializable {
 
     @FXML
     private void addTeam(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/addTeam.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/addTeam.fxml"));
         try {
             Parent root = loader.load();
 
@@ -117,15 +126,28 @@ public class TeamsSceneController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        teamObservableList = FXCollections.observableArrayList();
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("team_id"));
-        teamNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-        teamAbbColumn.setCellValueFactory(new PropertyValueFactory<>("abbreviation"));
-        table.setItems(teamObservableList);
-        loadTeams();
+
+    @FXML
+    private void delete(ActionEvent event) {
+        Team t = this.table.getSelectionModel().getSelectedItem();
+
+        if(t==null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Selecciona un equipo para borrar");
+            alert.showAndWait();
+        }else{
+            teamObservableList.remove(t);
+            try {
+                teamDAO.delete(t);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            this.table.refresh();
+            loadTeams();
+        }
     }
+
 }
 
 

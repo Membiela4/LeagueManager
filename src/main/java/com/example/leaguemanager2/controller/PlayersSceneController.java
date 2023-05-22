@@ -1,6 +1,7 @@
 package com.example.leaguemanager2.controller;
 
 import com.example.leaguemanager2.dao.PlayerDAO;
+import com.example.leaguemanager2.dao.TeamDAO;
 import com.example.leaguemanager2.modelDomain.Player;
 import com.example.leaguemanager2.modelDomain.Team;
 import javafx.collections.FXCollections;
@@ -26,6 +27,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -56,10 +58,19 @@ public class PlayersSceneController implements Initializable {
     private TableColumn<Player, Team> teamColumn;
     @FXML
     private Button refreshBtn;
+    @FXML
+    public TextField nameTextField;
+    @FXML
+    private TextField aliasTextField;
+    @FXML
+    private TextField dorsalTextField;
+    @FXML
+    private ChoiceBox teamChoiceField;
 
     private ObservableList<Player> playersList;
     public void closeWindows() {
     }
+     private static TeamDAO teamDAO;
 
     @FXML
     private void handleCloseButtonAction(ActionEvent event) {
@@ -69,7 +80,7 @@ public class PlayersSceneController implements Initializable {
     }
 
     public void back() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/mainScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -96,13 +107,23 @@ public class PlayersSceneController implements Initializable {
         aliasColumn.setCellValueFactory(new PropertyValueFactory<>("alias"));
         dorsalColumn.setCellValueFactory(new PropertyValueFactory<>("dorsal"));
         teamColumn.setCellValueFactory(new PropertyValueFactory<>("team"));
+        teamDAO= new TeamDAO();
+        try {
+            List<Team> teamList = new ArrayList<>();
+            teamList= teamDAO.findAll();
+            ObservableList<Team> teamObservableList = FXCollections.observableArrayList(teamList);
+            teamChoiceField.setItems(teamObservableList);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         loadPlayers();
+
     }
 
     @FXML
     private void addPlayer(ActionEvent event) {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/addPlayer.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/addPlayer.fxml"));
         try {
             Parent root = loader.load();
 
@@ -141,18 +162,35 @@ public class PlayersSceneController implements Initializable {
 
         table.setItems(playersList);
     }
+
+    @FXML
+    private void select() {
+        Player p = this.table.getSelectionModel().getSelectedItem();
+        nameTextField.setText(p.getName());
+        aliasTextField.setText(p.getAlias());
+        dorsalTextField.setText(String.valueOf(p.getDorsal()));
+        teamChoiceField.setValue(p.getTeam());
+    }
     @FXML
     private void modify(ActionEvent event) {
         Player p = this.table.getSelectionModel().getSelectedItem();
-
         if(p==null) {
-            //alert
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("Selecciona un jugador");
+            alert.showAndWait();
         }else{
             try {
-                String name = this.nameColumn.getText();
-                Player aux =playerDAO.findByName(name);
+                Player aux = new Player();
+                aux.setPlayer_id(p.getPlayer_id());
+                aux.setName(nameTextField.getText());
+                aux.setAlias(aliasTextField.getText());
+                aux.setDorsal(Integer.parseInt(dorsalTextField.getText()));
+                aux.setTeam((Team) teamChoiceField.getValue());
+                playerDAO.delete(p.getName());
+                playerDAO.save(aux);
                 this.table.refresh();
-
+                loadPlayers();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

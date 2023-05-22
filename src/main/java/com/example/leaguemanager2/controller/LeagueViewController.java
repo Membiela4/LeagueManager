@@ -93,7 +93,7 @@ public class LeagueViewController implements Initializable {
     }
 
     public void back() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/mainScene.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/mainScene.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         Stage stage = new Stage();
@@ -112,7 +112,7 @@ public class LeagueViewController implements Initializable {
 
     @FXML
     private List<Team> addTeamsToCalendar() {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/createCalendar.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/createCalendar.fxml"));
         try {
             Parent root = loader.load();
 
@@ -141,9 +141,11 @@ public class LeagueViewController implements Initializable {
 
         List<Match> calendarMatchs = new ArrayList<>(calendar.createCalendar(teams));
 
+
         for (Match m : calendarMatchs) {
             matchDAO.save(m);
         }
+        loadMatchs();
         this.table.refresh();
 
     }
@@ -160,6 +162,7 @@ public class LeagueViewController implements Initializable {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+            loadMatchs();
             this.table.refresh();
         }
 
@@ -169,7 +172,6 @@ public class LeagueViewController implements Initializable {
     @FXML
     private void handleCloseButtonAction(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        ;
         currentStage = (Stage) closeButton.getScene().getWindow();
         currentStage.close();
     }
@@ -184,7 +186,7 @@ public class LeagueViewController implements Initializable {
             alert.setContentText("Selecciona un equipo");
             alert.show();
         } else {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/setResultScene.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/setResultScene.fxml"));
             try {
                 Parent root = loader.load();
 
@@ -199,6 +201,7 @@ public class LeagueViewController implements Initializable {
                 stage.showAndWait();
 
                 table.refresh();
+                loadMatchs();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

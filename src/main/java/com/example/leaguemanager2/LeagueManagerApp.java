@@ -18,9 +18,9 @@ public class LeagueManagerApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("loadingPage.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/loadingPage.fxml"));
         Parent root = loader.load();
-        //MainSceneController controller2 = loader.getController();
+
 
         LoadingPageController controller = loader.getController();
         primaryStage.setScene(new Scene(root, 600, 400));

@@ -19,8 +19,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 public class AddTeamController implements Initializable {
+
+    public static Logger logger;
 
     @FXML
     private TextField nameField;

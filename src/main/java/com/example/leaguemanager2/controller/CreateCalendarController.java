@@ -35,6 +35,8 @@ public class CreateCalendarController implements Initializable {
 
     @FXML
     private Button closeButton;
+    @FXML
+    public Button addAllTeams;
 
     @FXML
     private TableView<Team> tableTeams;
@@ -62,30 +64,6 @@ public class CreateCalendarController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-        comboBoxTeams.setCellFactory(param -> new ListCell<Team>() {
-            @Override
-            protected void updateItem(Team team, boolean empty) {
-                super.updateItem(team, empty);
-                if (empty || team == null) {
-                    setText(null);
-                } else {
-                    setText(team.getName());
-                }
-            }
-        });
-
-        comboBoxTeams.setButtonCell(new ListCell<Team>() {
-            @Override
-            protected void updateItem(Team team, boolean empty) {
-                super.updateItem(team, empty);
-                if (empty || team == null) {
-                    setText(null);
-                } else {
-                    setText(team.getName());
-                }
-            }
-        });
     }
 
     @FXML
@@ -93,10 +71,6 @@ public class CreateCalendarController implements Initializable {
         Team chosenTeam = comboBoxTeams.getValue();
             if (chosenTeam != null && !teamObservableList.contains(chosenTeam)) {
                 teamObservableList.add(chosenTeam);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("INFO");
-                alert.setContentText("Añadido Correctamente");
-                alert.showAndWait();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("ERROR");
@@ -105,11 +79,29 @@ public class CreateCalendarController implements Initializable {
             }
     }
 
+    @FXML
+    private void addAllTeams(ActionEvent event) {
+        List<Team> allTeamsList = new ArrayList<>();
+        try {
+            allTeamsList = teamDAO.findAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        teamObservableList.addAll(allTeamsList);
+    }
+
 
     @FXML
     private void handleCloseButtonAction() {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+        if(!teamObservableList.isEmpty() || ((teamObservableList.size() / 2) != 0)) {
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.close();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("El numero de equipos debe ser par");
+            alert.showAndWait();
+        }
     }
 
     @FXML
@@ -117,6 +109,12 @@ public class CreateCalendarController implements Initializable {
         tableTeams.refresh();
     }
     public List<Team> getTeams(){
+
+        if(teamObservableList.toArray().length / 2 !=0){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERROR");
+            alert.setContentText("El numero de equipos debe ser par");
+        }
         return (List<Team>)teamObservableList;
     }
 }

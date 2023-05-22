@@ -15,7 +15,7 @@ public class PlayerDAO implements DAO<Player> {
     private final static String FINDBYID = "select * from player where player_id = ?";
     private final static String FINDBYTEAM = "select * from player where team_id = ?";
     private final static String DELETE = "delete from player where player_id = ?";
-    private final static String DELETEBYNAME = "delete from playere where name = ?";
+    private final static String DELETEBYNAME = "delete from player where name = ?";
     private final static String UPDATE = "update player set player_id = ?,name = ?, last_name = ?, alias = ?, dorsal = ?, team_id = ? where player_id = ?";
     private final static String INSERT = "insert into player(player_id,name,last_name,alias,dorsal,team_id) values(?,?,?,?,?,?)";
 
@@ -23,7 +23,7 @@ public class PlayerDAO implements DAO<Player> {
      public PlayerDAO(Connection connection) {this.connection = connection;}
     public PlayerDAO() {this.connection = Connect.getConnect();}
 
-    private TeamDAO teamDAO= new TeamDAO();
+    public static TeamDAO teamDAO = new TeamDAO();
     public static PlayerDAO playerdao;
 
 
@@ -145,7 +145,7 @@ public class PlayerDAO implements DAO<Player> {
                     pst.setInt(6, entity.getTeam().getTeam_id());
                     pst.executeUpdate();
                     /** Team */
-                    TeamDAO tdao = new TeamDAO(this.connection);
+                    TeamDAO teamDAO = new TeamDAO(this.connection);
                     result.setTeam(teamDAO.findByid(entity.getTeam().getTeam_id()));
 
                 }
@@ -161,7 +161,7 @@ public class PlayerDAO implements DAO<Player> {
                     pst.setInt(7, entity.getPlayer_id());
                     pst.executeUpdate();
                     /** Team */
-                    TeamDAO tdao = new TeamDAO(this.connection);
+                    TeamDAO teamDAO = new TeamDAO(this.connection);
                     result.setTeam(teamDAO.findByid(entity.getTeam().getTeam_id()));
                 }
                 result = entity;
