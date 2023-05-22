@@ -9,8 +9,10 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import static org.testng.Assert.assertEquals;
 
 
 public class Test3 {
@@ -27,17 +29,21 @@ public class Test3 {
             matchDAO = new MatchDAO();
             teams = teamDAO.findAll();
         }
-
-
-
-        List<Match> matchs= calendar.createCalendar(teams);
+        List<Match> matchs= new ArrayList<>();
         @Test
         void testCalendar() throws SQLException {
-            for (Match m: matchs) {
-                System.out.println(m);
+            assertEquals(true,createCalendar(teams));
+        }
 
 
-            }
+    public boolean createCalendar(List<Team> teams) {
+         matchs =calendar.createCalendar(teams);
+         if(!matchs.isEmpty()) {
+             return true;
+         }else{
+             return false;
+         }
+
     }
 
 

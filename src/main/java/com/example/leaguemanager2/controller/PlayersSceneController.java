@@ -71,7 +71,9 @@ public class PlayersSceneController implements Initializable {
     public void closeWindows() {
     }
      private static TeamDAO teamDAO;
-
+    /*
+    Method that close the actual scene
+     */
     @FXML
     private void handleCloseButtonAction(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();;
@@ -79,6 +81,9 @@ public class PlayersSceneController implements Initializable {
         currentStage.close();
     }
 
+    /*
+    Regret to the previous view
+     */
     public void back() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/mainScene.fxml"));
         Parent root = loader.load();
@@ -97,6 +102,9 @@ public class PlayersSceneController implements Initializable {
 
     }
 
+    /*
+    When the view is started, the fields are setted and the players loaded
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -121,6 +129,9 @@ public class PlayersSceneController implements Initializable {
 
     }
 
+    /*
+    Function to open a modal view that creates a new Player an insert it into database
+     */
     @FXML
     private void addPlayer(ActionEvent event) {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/leaguemanager2/views/addPlayer.fxml"));
@@ -148,6 +159,9 @@ public class PlayersSceneController implements Initializable {
         }
     }
 
+    /*
+    Function to load players of database
+     */
     public void loadPlayers()  {
         List<Player> players = null;
         try {
@@ -171,6 +185,9 @@ public class PlayersSceneController implements Initializable {
         dorsalTextField.setText(String.valueOf(p.getDorsal()));
         teamChoiceField.setValue(p.getTeam());
     }
+    /*
+    Function to edit selected player it uses four fields in the view
+     */
     @FXML
     private void modify(ActionEvent event) {
         Player p = this.table.getSelectionModel().getSelectedItem();
@@ -196,6 +213,9 @@ public class PlayersSceneController implements Initializable {
             }
         }
     }
+    /*
+    Function to delete a selected player
+     */
     @FXML
     private void delete(ActionEvent event) {
         Player p = this.table.getSelectionModel().getSelectedItem();
